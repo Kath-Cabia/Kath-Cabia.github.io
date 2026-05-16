@@ -18,12 +18,11 @@ title: KATHERINE # the main title
 
 tagline: Primeros pasos en Ciberseguridad # it will display as the subtitle
 
-description: >- # used by seo meta and the atom feed
- Blog de Aprendiendo Ciberseguridad Kath-Cabia.github.io.
+description: Blog de Aprendiendo Ciberseguridad Kath-Cabia.github.io. >- # used by seo meta and the atom feed
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://Kath-Cabia.github.io"
+url: https://Kath-Cabia.github.io
 
 github:
   username: Kath-Cabia # change to your GitHub username
@@ -99,7 +98,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://www.facebook.com/photo/?fbid=8628880907179661
+avatar: https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-1/462700152_8628880920512993_2419863463601915567_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHwOL3TIVJ5yQJtkbJ7dx6-LgYXGvieaZIuBhca-J5pkktrt-h95H11_Oa3nKsHFZjMc_QgR40RJkjyhfKqpLgJ&_nc_ohc=fvdMlaKe4rwQ7kNvwGyOvsC&_nc_oc=AdrD37--p5f1wrGgN5U-fcJDAJkghgqIJsQEDumxWeMKB5kYPO68-5qq6QCX5dEob-77cm-C9ZjHsEpmm4wjypWB&_nc_zt=24&_nc_ht=scontent-lim1-1.xx&_nc_gid=asBh1hbT1W3SLKkwszMJnA&_nc_ss=7b2a8&oh=00_Af6oSXGwJkFyyvtEcFQWNcUMt_1GY-9p1Sl-LqJubwET9w&oe=6A0EB9C7
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
