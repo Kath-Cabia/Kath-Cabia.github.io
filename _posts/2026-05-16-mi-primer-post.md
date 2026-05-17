@@ -5,6 +5,6 @@ categories: [Clases]
 tags: [ciberseguridad, github]
 ---
 
-# Hola al mundo de Fabi
+# **Hola al mundo de Fabi**
 
-Este es mi primer post en Jekyll.
+*Este es mi primer post en Jekyll.*
