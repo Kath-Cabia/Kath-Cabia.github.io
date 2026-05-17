@@ -18,8 +18,8 @@ title: KATHERINE # the main title
 
 tagline: Primeros pasos en Ciberseguridad # it will display as the subtitle
 
-description: Blog de Aprendiendo Ciberseguridad Kath-Cabia.github.io. >-  # used by seo meta and the atom feed
-
+description: >-  # used by seo meta and the atom feed
+ blog, github
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
 url: https://Kath-Cabia.github.io
@@ -27,14 +27,14 @@ url: https://Kath-Cabia.github.io
 github:
   username: Kath-Cabia # change to your GitHub username
 
-twitter:
-  username: twitter_username # change to your Twitter username
+#twitter:
+ # username: twitter_username # change to your Twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: your_full_name
-  email: example@domain.com # change to your email address
+  name: Katherine
+  email: m012610400001@untels.edu.pe # change to your email address
   fediverse_handle: # fill in your fediverse handle. E.g. "@username@domain.com"
   links:
     # The first element serves as the copyright owner's link
