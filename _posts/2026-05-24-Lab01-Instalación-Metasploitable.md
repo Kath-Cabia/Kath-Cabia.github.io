@@ -56,21 +56,22 @@ En la VM-Metasploitable, se selecciona la VM/Configuración/Red/Adaptador 1/Cone
 
 # **VERIFICACIÓN DE CONECTIVIDAD**
 [PASO 5:] 
-[# En Metasploitable
-- Se inicia el VM-Windows.
+## En Metasploitable
+[- Se inicia el VM-Windows.
 - Al aparecer windows, dirigirnos en la barra superior ENTRADA/Teclado/Insertar Ctrl-Alt-Del, y luego arrancará con (Administrador --> usuario: vagrant, contraseña: vagrant)]
 
 ![Ima.1.8](/assets/Ima.1.8.md.png)
 
-[#En Kali-Linux
-- Se inicia el VM.
+##En Kali-Linux
+[- Se inicia el VM.
 - Al aparecer windows, dirigirnos en la barra superior ENTRADA/Teclado/Insertar Ctrl-Alt-Del, y luego arrancará con (Administrador --> usuario: user, contraseña: user123)]
 
 ![Ima.1.9](/assets/Ima.1.9.md.png)
 
 # **Acción:**
 [En cada VM, abrimos sus respectivas terminales y verificamos la conectividad.
-Primero ingresamos <ipconfig> (en Metasploitable) e <ip address> (en Kali Linux) para conocer sus direcciones IPv4]
+Primero ingresamos <ipconfig> (en Metasploitable) e <ip address> (en Kali Linux) para conocer sus direcciones IPv4.]
+
 ![Ima.1.10](/assets/Ima.1.10.md.png)
 ![Ima.1.11](/assets/Ima.1.11.md.png)
 
