@@ -16,7 +16,7 @@ timezone:
 
 title: Katherine # the main title
 
-tagline: Mi primer blog persona 1.0  # it will display as the subtitle
+tagline: Mi primer blog personal 1.0  # it will display as the subtitle
 
 description: >-  # used by seo meta and the atom feed
  blog, github, ciberseguridad, python
@@ -99,7 +99,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-1/462700152_8628880920512993_2419863463601915567_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHwOL3TIVJ5yQJtkbJ7dx6-LgYXGvieaZIuBhca-J5pkktrt-h95H11_Oa3nKsHFZjMc_QgR40RJkjyhfKqpLgJ&_nc_ohc=fvdMlaKe4rwQ7kNvwGyOvsC&_nc_oc=AdrD37--p5f1wrGgN5U-fcJDAJkghgqIJsQEDumxWeMKB5kYPO68-5qq6QCX5dEob-77cm-C9ZjHsEpmm4wjypWB&_nc_zt=24&_nc_ht=scontent-lim1-1.xx&_nc_gid=asBh1hbT1W3SLKkwszMJnA&_nc_ss=7b2a8&oh=00_Af6oSXGwJkFyyvtEcFQWNcUMt_1GY-9p1Sl-LqJubwET9w&oe=6A0EB9C7
+avatar: https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/462700152_8628880920512993_2419863463601915567_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHwOL3TIVJ5yQJtkbJ7dx6-LgYXGvieaZIuBhca-J5pkktrt-h95H11_Oa3nKsHFZjMc_QgR40RJkjyhfKqpLgJ&_nc_ohc=YQXOaqs6rJsQ7kNvwG7j7EQ&_nc_oc=Adq2GdZ1HTA_6aMdXstFM_x8qIQpjx6HW8otVwv7fz7Z2CEMhvESbx_e76RXbcRnGBv3EZlH-g1lZOiSlKHwPBHl&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=kjBBDWagicEIoTvwL7Vx4g&_nc_ss=7b2a8&oh=00_Af-e6T6nvJDOZY7KA_RiSWjPJPx0zfLfPZ94zao-G2-gzQ&oe=6A222F05
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
