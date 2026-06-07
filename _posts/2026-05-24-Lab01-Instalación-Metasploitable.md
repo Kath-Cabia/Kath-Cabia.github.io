@@ -5,7 +5,7 @@ categories: [lab, setup]
 tags: [metasploitable, Virtualbox(VM), kali]
 ---
 
-               # **¿QUÉ ES LA VM METASPLOITABLE 3?**
+# **¿QUÉ ES LA VM METASPLOITABLE 3?**
 *Este es mi primer post sobre la instalación de la Máquina Virtual Metasploitable 3* 
 
 Es una máquina virtual vulnerable utilizada en laboratorios de ciberseguridad para practicar análisis de seguridad y aprender cómo funcionan distintas vulnerabilidades en un entorno controlado. En este laboratorio se utilizó para simular una máquina con fallos de seguridad que puede ser analizada desde Kali Linux. 
@@ -66,19 +66,19 @@ Usamos Host-Only porque crea una red privada y aislada donde solo se comunican e
 
 ## **VERIFICACIÓN DE CONECTIVIDAD**
 **PASO 5:**
-## En Metasploitable
+## **En Metasploitable**
 - Se inicia el VM-Windows.
 - Al aparecer windows, dirigirnos en la barra superior ENTRADA/Teclado/Insertar Ctrl-Alt-Del, y luego arrancará con (Administrador --> usuario: vagrant, contraseña: vagrant)
 
 ![Ima.1.8](/assets/Ima.1.8.md.png)
 
-**En Kali-Linux**
+## **En Kali-Linux**
 - Se inicia el VM.
 - Al aparecer windows, dirigirnos en la barra superior ENTRADA/Teclado/Insertar Ctrl-Alt-Del, y luego arrancará con (Administrador --> usuario: user, contraseña: user123)
 
 ![Ima.1.9](/assets/Ima.1.9.md.png)
 
-# **Acción:**
+## **Acción:**
 En cada VM, abrimos sus respectivas terminales y verificamos la conectividad.
 Primero ingresamos *ipconfig (en Metasploitable) e ip address* (en Kali Linux) para conocer sus direcciones IPv4.
 
