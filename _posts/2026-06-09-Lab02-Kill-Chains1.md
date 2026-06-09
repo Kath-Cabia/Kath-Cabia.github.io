@@ -4,15 +4,15 @@ date: 2026-06-09
 categories: [lab, setup]
 tags: [kill_Chain, SSH, VSS, metasploitable, kali]
 ---
-#KILL CHAIN 1: SSH Brute Force + Credential Dumping 
+#**KILL CHAIN 1: SSH Brute Force + Credential Dumping** 
 
-## Snapshot de Metasploitable 3
+##**Snapshot de Metasploitable 3**
 
 Se guarda un punto de restauración de la máquina virtual para poder recuperar su estado original y repetir las pruebas cuando sea necesario.
 
-![1](/assets/1.png)
+![1](/assets/tercer/1.png)
 
-## ETAPA 1: Reconocimiento
+##**ETAPA 1: Reconocimiento**
 
 Se identifica la máquina objetivo dentro de la red y se recolecta información básica sobre su configuración.
 
@@ -22,8 +22,8 @@ Se identifica la máquina objetivo dentro de la red y se recolecta información 
 - En la VM de Mestasploitable se ejecuta el comando **ip config**, para visualizar la IP asignada a esta máquina virtual.
 
 Resultado:
-![1.1](/assets/1.1.png)
-![1.2](/assets/1.2.png)
+![1.1](/assets/tercer/1.1.png)
+![1.2](/assets/tercer/1.2.png)
 
 #1.2. Comando de Escaneo Inicial con Nmap
 Con el fin de detectar los equipos activos en la red, se utilizó Nmap para ejecutar un escaneo que omite la resolución de dominios.
@@ -32,8 +32,8 @@ Con el fin de detectar los equipos activos en la red, se utilizó Nmap para ejec
    password: vagrant
 
 Resultado:
-![2.2](/assets/2.1.png)
-![2.2](/assets/2.2.png)
+![2.2](/assets/tercer/2.1.png)
+![2.2](/assets/tercer/2.2.png)
 
 ##1.3. Escaneo agresivo:
 Se realizó un escaneo agresivo con **Nmap** para identificar el sistema operativo, los servicios activos, sus versiones y otra información relevante del host objetivo, examinando además todos los puertos TCP disponibles.
@@ -46,42 +46,42 @@ Explicación previa:
  sudo nmap -A -p- 10.0.2.15
 
 Resultado:
-![3.1](/assets/3.1.png)
-![3.2](/assets/3.2.png)
-![3.3](/assets/3.3.png)
-![3.4](/assets/3.4.png)
-![3.5](/assets/3.5.png)
-![3.6](/assets/3.6.png)
-![3.7](/assets/3.7.png)
+![3.1](/assets/tercer/3.1.png)
+![3.2](/assets/tercer/3.2.png)
+![3.3](/assets/tercer/3.3.png)
+![3.4](/assets/tercer/3.4.png)
+![3.5](/assets/tercer/3.5.png)
+![3.6](/assets/tercer/3.6.png)
+![3.7](/assets/tercer/3.7.png)
 
 
 **Si bien es cierto que el anterior escaneo es agresivo**, para un pentesting más completo y metódico, podríamos también se podrían considerar **otros tipos de escaneos**, como:
 
-###A:Escaneo SYN (Stealth Scan): 
+### **A:Escaneo SYN (Stealth Scan):** 
 Se utiliza para identificar rápidamente los puertos abiertos de un equipo sin establecer una conexión completa, lo que permite realizar el reconocimiento de manera más discreta y con menor probabilidad de ser detectado.
    
      nmap -sS 10.0.2.15 
 
 Resultado:
-![4.1](/assets/4.1.png)
+![4.1](/assets/tercer/4.1.png)
 
 
-###B: Escaneo de UDP: 
+### **B: Escaneo de UDP:** 
 Permite identificar servicios que utilizan el protocolo UDP y que podrían representar posibles puntos de acceso o vulnerabilidades. Este análisis complementa el escaneo TCP y ayuda a obtener una visión más completa de los servicios disponibles en el equipo evaluado.
 
     nmap -sU 10.0.2.15
 
 Resultado:
-![5.1](/assets/5.1.png)
+![5.1](/assets/tercer/5.1.png)
 
 
-##C:Escaneo de Vulnerabilidades (con Scripts): 
+### **C:Escaneo de Vulnerabilidades (con Scripts):**
 Permite evaluar los servicios identificados en los puertos abiertos para detectar posibles vulnerabilidades conocidas. Para ello, se utilizan scripts de Nmap que realizan comprobaciones específicas sobre los servicios en ejecución, facilitando la identificación de fallos de seguridad que podrían ser aprovechados por un atacante.
 
         nmap --script vuln -p80,445 10.0.2.15
 
 Resultado:
-![6.1](/assets/6.1.png)
+![6.1](/assets/tercer/6.1.png)
 
 ###D:Escaneos FIN, NULL o Xmas: 
 on técnicas de reconocimiento que utilizan combinaciones especiales de flags TCP para identificar puertos abiertos de forma más discreta. Se emplean como alternativa al escaneo SYN cuando se busca evitar ciertas restricciones o mecanismos básicos de detección en la red.
@@ -89,21 +89,21 @@ on técnicas de reconocimiento que utilizan combinaciones especiales de flags TC
        nmap -sF, -sN, -sX
 
 Resultado:
-![7.1](/assets/7.1.png)
-![7.2](/assets/7.2.png)
-![7.3](/assets/7.3.png)
-![7.4](/assets/7.4.png)
+![7.1](/assets/tercer/7.1.png)
+![7.2](/assets/tercer/7.2.png)
+![7.3](/assets/tercer/7.3.png)
+![7.4](/assets/tercer/7.4.png)
 
 
-##1.4. Confirmación del Firewall
+## **1.4. Confirmación del Firewall**
 Permite analizar la ruta seguida por los paquetes hacia el host objetivo e identificar posibles dispositivos de red intermedios, como routers o firewalls, que podrían estar filtrando o controlando el tráfico.
 
       traceroute ip,  es decir,  traceroute 10.0.2.15   
    
 Resultado:
-![8.1](/assets/8.1.png)
+![8.1](/assets/tercer/8.1.png)
 
-## ETAPA 2: Enumeración de servicios
+## **ETAPA 2: Enumeración de servicios**
 
 ##2.1.Escaneo de servicio SSH
 Permite identificar si el servicio SSH se encuentra activo en el puerto correspondiente, así como obtener información sobre la versión del software en ejecución para evaluar posibles vulnerabilidades o configuraciones inseguras.
@@ -113,11 +113,11 @@ Explicación:
 
      sudo nmap -sV -p 22 10.0.2.15
 Resultado:
-![9.1](/assets/9.1.png)
+![9.1](/assets/tercer/9.1.png)
 
-## ETAPA 3:Acceso Inicial
+## **ETAPA 3:Acceso Inicial**
 
-##3.1. Descarga de diccionarios
+##**3.1. Descarga de diccionarios**
 
 Diccionarios para el laboratorio:
 
@@ -125,7 +125,7 @@ Diccionarios para el laboratorio:
 - Rockyou para Passwords
 
 Diccionarios descargados:
-![10](/assets/10.png)
+![10](/assets/tercer/10.png)
 
 En Kali Linux enviar los diccionarios descargados a la ruta: **Downloads/diccionarios** descomprimir con **gzip -dk rockyou.txt.gz** y y luego se corrobora que contenga al usuario **vagrant**:
 
@@ -140,19 +140,19 @@ En Kali Linux enviar los diccionarios descargados a la ruta: **Downloads/diccion
   └─$ gzip -dk rockyou.txt.gz
  
 Resultado
-![10.1](/assets/10.1.png)
+![10.1](/assets/tercer/10.1.png)
 
 Luego nos aseguramos de que contenga el usuario vagrant.
 Se garantiza que el password se encuentra en la lista de diccionarios.
 
 Usuario vagrant con **cat rockyou.txt | grep vagrant**
-![10.2](/assets/10.2.png)
+![10.2](/assets/tercer/10.2.png)
 
-##3.2. Enumeración de Usuarios con Metasploit
+##**3.2. Enumeración de Usuarios con Metasploitable**
 
 Se crean 2 entornos de trabajo, la terminal superior será de Linux y la terminal inferior será para invocar a Metasploitable, ya que en esa región se podrán leer los comandos propios de Metasploitable.
 
-![11.1](/assets/11.1.png)
+![11.1](/assets/tercer/11.1.png)
 
 Se inicia Metasploitable con "msfconsole -q". La carga se visualiza como "msf6>". Asimismo se tiene que cargar las herramientas de escaneo.
 
@@ -161,7 +161,7 @@ Se inicia Metasploitable con "msfconsole -q". La carga se visualiza como "msf6>"
   msf6>
 
 Resultado:
-![11.2](/assets/11.2.png)
+![11.2](/assets/tercer/11.2.png)
 
 Ahora el Atacante (Kali) envía "scripts" paquetes SSH de autenticación con una lista de usuarios a la víctima = "target (Metasploitable)" y este lo recibe. La víctima responde con un mensaje que permite que el Atacante pueda identificar si el usuario que se ha intentado es válido o no.
 
@@ -175,7 +175,7 @@ Se ingresa:
      msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
 
 Resultado
-![11.3](/assets/11.3.png) 
+![11.3](/assets/tercer/11.3.png) 
 
 Se configura el párametro RHOST y se le asigna el valor IP de la máquina target. Luego se configura el archivo donde van a estar los usuarios y el nombre del diccionario:
 
@@ -186,13 +186,13 @@ Se ingresa:
 4. msf6 auxiliary(scanner/ssh/ssh_anumusers)>run
 
 Resultado
-![11.4](/assets/11.4.png)
+![11.4](/assets/tercer/11.4.png)
 
 Ejecutamos con "run" para enviar los archivos.
 
 En el script de Metasploitable: se ha encontrado el potencial usuario 'vagrant', ahora se tiene que intentar conseguir el password adecuado para el usuario.
 
-![11.5](/assets/11.5.png)
+![11.5](/assets/tercer/11.5.png)
 
 ##3.3. Ataque de Fuerza Bruta en SSH
 
@@ -216,22 +216,22 @@ Se realiza el cambio de ruta y a través de 'show options' se observan las confi
 - PASS_FILE: la ruta del archivo con las direcciones
 
 Resultado:
-![12.1](/assets/12.1.png)
-![12.2](/assets/12.2.png)
+![12.1](/assets/tercer/12.1.png)
+![12.2](/assets/tercer/12.2.png)
 
 Se ejecuta y empieza a  realizar la búsqueda del USERNAME 'vagrant':
-![12.3](/assets/12.3.png)
+![12.3](/assets/tercer/12.3.png)
 
-##ETAPA 4: Explotación y Acceso
+##**ETAPA 4: Explotación y Acceso**
 
 ##4.1. CONEXIÓN SSH 
 Ya obtenido el usuario y contraseña de la víctima (USERNAME: vagrant, CONTRASEÑA: vagrant), se procede a realizar la conexión SSH con la IP '10.0.2.15'. Sin embargo, para un mejor entorno de ejecución se ingresa al modo/terminal 'bash' de Metasploitable:
 
-![13.1](/assets/13.1.png)
+![13.1](/assets/tercer/13.1.png)
 
-##ETAPA 5: Extracción de Archivos SAM y SYSTEM 
+##**ETAPA 5: Extracción de Archivos SAM y SYSTEM** 
 
-##5.1. Comprobación de los Privilegios
+##**5.1. Comprobación de los Privilegios**
 
 Desde el lado del adversario (Metasploitable) es necesario comprobar los privilegios que se tienen a través, del comando: 'whoami /priv'.
 
@@ -244,30 +244,31 @@ Desde el lado del adversario (Metasploitable) es necesario comprobar los privile
    C:\Users\vagrant>whoami /priv
 
 Resultado:
-![13.2](/assets/13.2.png)
+![13.2](/assets/tercer/13.2.png)
 
-###5.2. Localiza el Script vssown.vbs
+###**5.2. Localiza el Script vssown.vbs**
+
 Antes de continuar, se debe comprobar que el script vssown.vbs se encuentre disponible en el sistema comprometido. Este script se utiliza para crear una copia de sombra (Volume Shadow Copy), lo que permite acceder a archivos protegidos por el sistema.
 
 En caso de que el archivo no esté disponible, puede descargarse previamente desde Kali Linux a través de su repositorio oficial: https://github.com/lanmaster53/ptscripts/blob/master/windows/vssown.vb
 
 Luego en la terminal de Kali ingresar el comando siguiente e ingresar la contraseña: 'vagrant', para copiar un archivo del computador local hacia el objetivo remoto: 
 
-       scp vssown.vbs vagrant@10.0.2.15:C:\\Users\\vagrant\\Downloads
+1. scp vssown.vbs vagrant@10.0.2.15:C:\\Users\\vagrant\\Downloads
 
 *NOTA: La máquina víctima (Metasploitable) debe de estar encendida para que se realice la copia.
 
-![14.1](/assets/14.1.png)
+![14.1](/assets/tercer/14.1.png)
 
 Una manera de verificar la copia es ingresando y buscando en Windows la ruta de la copia de 'vssown'
  
     C:\\Users\\vagrant\\Downloads
 
-![14.2](/assets/14.2.png)
+![14.2](/assets/tercer/14.2.png)
 
 Se realiza la conexión vía ssh a 'ssh vagrant@10.0.2.15', se ingresa la contraseña 'vagrant' y se invoca al 'bash' para poder entrar a la terminal de Metasploitable.
 
-![14.3](/assets/14.3.png)
+![14.3](/assets/tercer/14.3.png)
 
 Una vez transferido, ingresar a la ruta del archivo y listar el archivo vssown.vbs para verificar que se encuentra en esta carpeta:
 
@@ -279,9 +280,9 @@ ls -lh C:\\Users\\vagrant\\Downloads\\vssown.vbs
      ls -lh C:\\Users\\vagrant\\Downloads\\vssown.vbs
 
 Resultado:
-![14.4](/assets/14.4.png)
+![14.4](/assets/tercer/14.4.png)
 
-##5.3. ¿Qué podemos hacer con el vssown.vbs?
+##**5.3. ¿Qué podemos hacer con el vssown.vbs?**
 Para listar los comandos que el archivo vssown.vbs permite ejecutar, solo debemos ejecutar 'cscript vssown.vbs' en la máquina víctima (Metasploitable). Asimismo, los comandos que vamos a usar son:
 
 /list                             - List current volume shadow copies.
@@ -289,18 +290,18 @@ Para listar los comandos que el archivo vssown.vbs permite ejecutar, solo debemo
 /stop                             - Halt the shadow copy service.
 /status                           - Show status of shadow copy service.
 
-![14.5](/assets/14.5.png)
+![14.5](/assets/tercer/14.5.png)
 
-¿QUÉ ES VOLUME SHADOW COPY - VSS?
+**¿QUÉ ES VOLUME SHADOW COPY - VSS?**
 Volume Shadow Copy (VSS) es una función de Windows que crea copias de seguridad de archivos y carpetas en un momento específico, incluso cuando estos están siendo utilizados. Gracias a ello, es posible recuperar información eliminada, restaurar versiones anteriores de archivos o realizar copias de seguridad sin interrumpir el funcionamiento del sistema.
 
 Usos principales:
 
-Recuperación de archivos perdidos o modificados.
-Creación de copias de seguridad.
-Auditoría y análisis de información del sistema.
+- Recuperación de archivos perdidos o modificados.
+- Creación de copias de seguridad.
+- Auditoría y análisis de información del sistema.
 
-##5.4. EJECUCIÓN DEL SCRIPT VSSOWN.VBS
+##**5.4. EJECUCIÓN DEL SCRIPT VSSOWN.VBS**
 Se inicia el servicio Volume Shadow Copy con el comando:
 
  1. cscript C:\\Users\\vagrant\\Downloads\\vssown.vbs /start
@@ -315,16 +316,16 @@ Indica que el servicio o proceso asociado a VSS que controla el script vssown.vb
 
 El script está intentando crear una Shadow Copy (instantánea) de la unidad C:
 
-![14.6](/assets/14.6.png)
+![14.6](/assets/tercer/14.6.png)
 
 Se listan los volúmenes de shadows (vss) existentes:
-![14.7](/assets/14.7.png)
+![14.7](/assets/tercer/14.7.png)
 
 El script vssown.vbs generará una salida con la ubicación de la copia de sombra. De la imagen anterior se obtiene la ruta, esta será la ubicación donde podremos acceder a los archivos SAM y SYSTEM sin restricciones. En el comando anterior, la ruta es:
 
  \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1 
 
-##5.5. Copia los Archivos SAM y SYSTEM
+##**5.5. Copia los Archivos SAM y SYSTEM**
 
 Ahora que tenemos la ruta de la copia del volumen shadow (vss), entrar en la terminal de Kali, para ello se debe de ingresar al ssh:
 
@@ -346,10 +347,10 @@ cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\
 NOTA: Reemplazar HarddiskVolumeShadowCopyX con el número correspondiente que el script vssown.vbs nos indicó. En este caso 'HarddiskVolumeShadowCopy1'
 
 Resultado:
-![14.8](/assets/14.8.png)
+![14.8](/assets/tercer/14.8.png)
 Salimos del modo cmd con 'exit'
 
-## ETAPA 6: Transferir los Archivos SAM y SYSTEM al atacante
+##**ETAPA 6: Transferir los Archivos SAM y SYSTEM al atacante**
 
 Previamente identificar la ruta real usando **scp** o descarga los archivos SAM y SYSTEM desde la máquina víctima a tu máquina atacante para realizar el análisis de los hashes de contraseñas. Para ello ingresar a la terminal de Kali, a la carpeta de descargas, con: 
  
@@ -359,9 +360,9 @@ Previamente identificar la ruta real usando **scp** o descarga los archivos SAM 
 password: vagrant
 
 Resultado:
-![14.9](/assets/14.9.png)
+![14.9](/assets/tercer/14.9.png)
 
-##ETAPA 7. Extracción de Hashes
+##**ETAPA 7. Extracción de Hashes**
 
 ** samdump2: Asimismo, permite extraer los hashes de las contraseñas almacenadas en Windows utilizando los archivos SYSTEM y SAM. El archivo SYSTEM contiene la información necesaria para descifrar los datos protegidos del archivo SAM (Security Account Manager), donde se almacenan los hashes de las cuentas de usuario.
 
@@ -369,15 +370,15 @@ En Kali:
 1. samdump2 SYSTEM SAM > hashes.txt
 2. samdump2 SYSTEM SAM 
 
-NOTA: Para funcionar, samdump2 requiere dos archivos específicos del registro de Windows: el hive SYSTEM y el hive SAM. El archivo SYSTEM contiene la clave necesaria para descifrar la información almacenada en el archivo SAM (Security Account Manager), que es donde residen los hashes de las contraseñas de los usuarios.
+**NOTA:** Para funcionar, samdump2 requiere dos archivos específicos del registro de Windows: el hive SYSTEM y el hive SAM. El archivo SYSTEM contiene la clave necesaria para descifrar la información almacenada en el archivo SAM (Security Account Manager), que es donde residen los hashes de las contraseñas de los usuarios.
 
 Al ejecutar el comando samdump2 SYSTEM SAM > hashes.txt, la herramienta procesa ambos archivos, extrae los hashes y guarda el resultado en el archivo hashes.txt. Esta información puede utilizarse posteriormente para realizar análisis de seguridad o auditorías de contraseñas mediante herramientas especializadas.
 
 Resultado:
-![15.1](/assets/15.1.png)
+![15.1](/assets/tercer/15.1.png)
 
 
-##Reinicio de resultados de John the Ripper
+##**Reinicio de resultados de John the Ripper**
 Se elimina el archivo ~/.john/john.pot, donde John the Ripper guarda las contraseñas encontradas. Esto permite que las credenciales recuperadas vuelvan a mostrarse durante una nueva ejecución del ataque.
 
  1 ┌──(user㉿kali)-[~/Downloads]
@@ -390,7 +391,7 @@ En esencia, este comando le ordena a la herramienta John the Ripper que realice 
  4 └─$ john --format=NT --wordlist=diccionarios/kaonashi14M.txt hashes.txt --fork=4
    
 Resultado:
-![15.2](/assets/15.2.png)
+![15.2](/assets/tercer/15.2.png)
 
 John the Ripper logró recuperar varias contraseñas a partir de los hashes NTLM contenidos en hashes.txt.
 
