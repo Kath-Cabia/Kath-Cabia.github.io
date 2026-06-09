@@ -2,8 +2,9 @@
 title: "Lab.02 - Kill Chains 1"
 date: 2026-06-09
 categories: [lab, setup]
-tags: [kill_Chain, SSH, VSS, metasploitable, kali]
+tags: [kill Chains, SSH, metasploitable, kali]
 ---
+
 #**KILL CHAIN 1: SSH Brute Force + Credential Dumping** 
 
 ##**Snapshot de Metasploitable 3**
@@ -59,8 +60,8 @@ Resultado:
 
 ### **A:Escaneo SYN (Stealth Scan):** 
 Se utiliza para identificar rápidamente los puertos abiertos de un equipo sin establecer una conexión completa, lo que permite realizar el reconocimiento de manera más discreta y con menor probabilidad de ser detectado.
-   
-     nmap -sS 10.0.2.15 
+
+nmap -sS 10.0.2.15 
 
 Resultado:
 ![4.1](/assets/tercer/4.1.png)
@@ -69,7 +70,7 @@ Resultado:
 ### **B: Escaneo de UDP:** 
 Permite identificar servicios que utilizan el protocolo UDP y que podrían representar posibles puntos de acceso o vulnerabilidades. Este análisis complementa el escaneo TCP y ayuda a obtener una visión más completa de los servicios disponibles en el equipo evaluado.
 
-    nmap -sU 10.0.2.15
+nmap -sU 10.0.2.15
 
 Resultado:
 ![5.1](/assets/tercer/5.1.png)
@@ -78,7 +79,7 @@ Resultado:
 ### **C:Escaneo de Vulnerabilidades (con Scripts):**
 Permite evaluar los servicios identificados en los puertos abiertos para detectar posibles vulnerabilidades conocidas. Para ello, se utilizan scripts de Nmap que realizan comprobaciones específicas sobre los servicios en ejecución, facilitando la identificación de fallos de seguridad que podrían ser aprovechados por un atacante.
 
-        nmap --script vuln -p80,445 10.0.2.15
+nmap --script vuln -p80,445 10.0.2.15
 
 Resultado:
 ![6.1](/assets/tercer/6.1.png)
@@ -86,7 +87,7 @@ Resultado:
 ###D:Escaneos FIN, NULL o Xmas: 
 on técnicas de reconocimiento que utilizan combinaciones especiales de flags TCP para identificar puertos abiertos de forma más discreta. Se emplean como alternativa al escaneo SYN cuando se busca evitar ciertas restricciones o mecanismos básicos de detección en la red.
 
-       nmap -sF, -sN, -sX
+nmap -sF, -sN, -sX
 
 Resultado:
 ![7.1](/assets/tercer/7.1.png)
@@ -98,7 +99,7 @@ Resultado:
 ## **1.4. Confirmación del Firewall**
 Permite analizar la ruta seguida por los paquetes hacia el host objetivo e identificar posibles dispositivos de red intermedios, como routers o firewalls, que podrían estar filtrando o controlando el tráfico.
 
-      traceroute ip,  es decir,  traceroute 10.0.2.15   
+traceroute ip,  es decir,  traceroute 10.0.2.15   
    
 Resultado:
 ![8.1](/assets/tercer/8.1.png)
@@ -111,7 +112,8 @@ Permite identificar si el servicio SSH se encuentra activo en el puerto correspo
 Explicación:
 -sV: Permite identificar los servicios activos y determinar la versión del software que se encuentra ejecutándose en los puertos abiertos.
 
-     sudo nmap -sV -p 22 10.0.2.15
+sudo nmap -sV -p 22 10.0.2.15
+
 Resultado:
 ![9.1](/assets/tercer/9.1.png)
 
@@ -171,8 +173,8 @@ El módulo utiliza una herramienta de Metasploitable para formar/consultar paque
 Ingresando "show options" se visualizan todas las opciones de configuración, es decir, para saber que es lo que se tiene que configurar. El módulo "ssh_enumusers" tiene parámetros que sirven para configurar el funcionamiento de ese módulo.
 
 Se ingresa: 
-     msf6>use auxiliary/scanner/ssh/ssh_enumusers
-     msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
+1.msf6>use auxiliary/scanner/ssh/ssh_enumusers
+2.msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
 
 Resultado
 ![11.3](/assets/tercer/11.3.png) 
@@ -194,7 +196,7 @@ En el script de Metasploitable: se ha encontrado el potencial usuario 'vagrant',
 
 ![11.5](/assets/tercer/11.5.png)
 
-##3.3. Ataque de Fuerza Bruta en SSH
+##**3.3. Ataque de Fuerza Bruta en SSH**
 
 Luego de haber encontrado un usuario válido, se utiliza un ataque de fuerza bruta obtener posibles contraseñas.
 
@@ -224,7 +226,7 @@ Se ejecuta y empieza a  realizar la búsqueda del USERNAME 'vagrant':
 
 ##**ETAPA 4: Explotación y Acceso**
 
-##4.1. CONEXIÓN SSH 
+##**4.1. CONEXIÓN SSH**
 Ya obtenido el usuario y contraseña de la víctima (USERNAME: vagrant, CONTRASEÑA: vagrant), se procede a realizar la conexión SSH con la IP '10.0.2.15'. Sin embargo, para un mejor entorno de ejecución se ingresa al modo/terminal 'bash' de Metasploitable:
 
 ![13.1](/assets/tercer/13.1.png)
@@ -277,7 +279,7 @@ ssh vagrant@10.0.2.15
 Users\vagrant>cd Downloads
 Users\vagrant\Downloads>ls
 ls -lh C:\\Users\\vagrant\\Downloads\\vssown.vbs
-     ls -lh C:\\Users\\vagrant\\Downloads\\vssown.vbs
+ls -lh C:\\Users\\vagrant\\Downloads\\vssown.vbs
 
 Resultado:
 ![14.4](/assets/tercer/14.4.png)

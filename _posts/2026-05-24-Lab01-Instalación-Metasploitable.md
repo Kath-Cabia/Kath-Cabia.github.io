@@ -5,37 +5,38 @@ categories: [lab, setup]
 tags: [metasploitable, Virtualbox(VM), kali]
 ---
 
-# **¿QUÉ ES LA VM METASPLOITABLE 3?**
+# **¿QUÉ ES METASPLOITABLE 3?**
 *Este es mi primer post sobre la instalación de la Máquina Virtual Metasploitable 3* 
 
 Es una máquina virtual vulnerable utilizada en laboratorios de ciberseguridad para practicar análisis de seguridad y aprender cómo funcionan distintas vulnerabilidades en un entorno controlado. En este laboratorio se utilizó para simular una máquina con fallos de seguridad que puede ser analizada desde Kali Linux. 
 
 La diferencia entre un archivo ***".ova"*** e ***".iso"*** es que el **".ova"** contiene una máquina virtual ya configurada y lista para importarse en VirtualBox o VMware, mientras que el **".iso"** es una imagen de instalación de un sistema operativo que requiere una configuración manual antes de poder utilizarse.
 
-##**Creación de LA VM Metasploitable 3**
+## **Creación de LA VM Metasploitable 3**
 **PASO 1:**
-Metasploitable 3 windows viene como archivo **.iso** y **.ova**, en esta guía para crear la máquina virtual se está montando el .ova. Asimismo, dejar por defecto la sección Configuración
+Metasploitable 3 windows viene como archivo **.iso** y **.ova**, en esta guía para crear la máquina virtual se está montando el .ova. Asimismo, dejar por defecto la sección Configuración.
 
-Montando **.iso** al VM:
+Montando el archivo **.iso** a la máquina virtual:
 ![Ima.0.0](/assets/Ima.0.0.md.png)
 
+Configuración interna de la máquina virtual Metasploitable creada.
 ![Ima.0.1](/assets/Ima.0.1.md.png)
 
-Máquina virtual creada
+Máquina virtual creada:
 ![Ima.0.0.0](/assets/Ima.0.0.0.md.png)
 
-## **CONFIGURACIÓN INTERNA DE LA VM METASPLOITABLE 3**
+##**CONFIGURACIÓN INTERNA DE LA VM METASPLOITABLE 3**
 
 **PASO 2:** 
 Durante la creación de la máquina virtual se seleccionó el sistema operativo **Microsoft Windows** y la versión Windows Server 2008 de 64 bits, correspondiente a la configuración requerida para Metasploitable 3.
 
 ![Ima.1.1](/assets/Ima.1.1.md.png)
 
-Luego, se procede a configurar el sistema a 2Gb (2048MB), conectar la **red a NAT**, activar el **Hyper-V**, como se observa en las siguientes imágenes de forma correspondiente.
+Luego, se procede a configurar el sistema a 2Gb (2048MB), conectar la **red a NAT**, activar el **Hyper-V**, como se observa en las siguientes imágenes de forma correspondiente:
 
 ![Ima.1.2](/assets/Ima.1.2.md.png)
 
-Conexión a la **red NAT**
+Conexión a la **red NAT**:
 ![Ima.1.3](/assets/Ima.1.3.md.png)
 
 Se ingresa en la configuración de Metasploitable, luego:
