@@ -5,19 +5,19 @@ categories: [lab, setup]
 tags: [kill Chains, SSH, metasploitable, kali]
 ---
 
-#**KILL CHAIN 1: SSH Brute Force + Credential Dumping** 
+# **KILL CHAIN 1: SSH Brute Force + Credential Dumping** 
 
-##**Snapshot de Metasploitable 3**
+## **Snapshot de Metasploitable 3**
 
 Se guarda un punto de restauración de la máquina virtual para poder recuperar su estado original y repetir las pruebas cuando sea necesario.
 
 ![Im.1](/assets/tercer/Im.1.png)
 
-##**ETAPA 1: Reconocimiento**
+## **ETAPA 1: Reconocimiento**
 
 Se identifica la máquina objetivo dentro de la red y se recolecta información básica sobre su configuración.
 
-##1.1. Verificación de la Red (Atacante/Víctima)
+## 1.1. Verificación de la Red (Atacante/Víctima)
 
 - En la VM de Kali Linux se ejecuta el comando **ip address show**, para visualizar la IP asignada a esta máquina virtual.
 - En la VM de Mestasploitable se ejecuta el comando **ip config**, para visualizar la IP asignada a esta máquina virtual.
@@ -26,7 +26,7 @@ Resultado:
 ![Im.1.1](/assets/tercer/Im.1.1.png)
 ![Im.1.2](/assets/tercer/Im.1.2.png)
 
-##1.2. Comando de Escaneo Inicial con Nmap
+## 1.2. Comando de Escaneo Inicial con Nmap
 Con el fin de detectar los equipos activos en la red, se utilizó Nmap para ejecutar un escaneo que omite la resolución de dominios.
 
    sudo nmap -sn 10.0.2.15/24
@@ -36,7 +36,7 @@ Resultado:
 ![Im.2.2](/assets/tercer/Im.2.1.png)
 ![Im.2.2](/assets/tercer/Im.2.2.png)
 
-##1.3. Escaneo agresivo:
+## 1.3. Escaneo agresivo:
 Se realizó un escaneo agresivo con **Nmap** para identificar el sistema operativo, los servicios activos, sus versiones y otra información relevante del host objetivo, examinando además todos los puertos TCP disponibles.
 
 Explicación previa:
@@ -106,7 +106,7 @@ Resultado:
 
 ## **ETAPA 2: Enumeración de servicios**
 
-##2.1.Escaneo de servicio SSH
+## 2.1.Escaneo de servicio SSH
 Permite identificar si el servicio SSH se encuentra activo en el puerto correspondiente, así como obtener información sobre la versión del software en ejecución para evaluar posibles vulnerabilidades o configuraciones inseguras.
 
 Explicación:
@@ -119,7 +119,7 @@ Resultado:
 
 ## **ETAPA 3:Acceso Inicial**
 
-##**3.1. Descarga de diccionarios**
+## **3.1. Descarga de diccionarios**
 
 Diccionarios para el laboratorio:
 
@@ -150,7 +150,7 @@ Se garantiza que el password se encuentra en la lista de diccionarios.
 Usuario vagrant con **cat rockyou.txt | grep vagrant**
 ![Im.10.2](/assets/TERCER/Im.10.2.png)
 
-##**3.2. Enumeración de Usuarios con Metasploitable**
+## **3.2. Enumeración de Usuarios con Metasploitable**
 
 Se crean 2 entornos de trabajo, la terminal superior será de Linux y la terminal inferior será para invocar a Metasploitable, ya que en esa región se podrán leer los comandos propios de Metasploitable.
 
@@ -196,7 +196,7 @@ En el script de Metasploitable: se ha encontrado el potencial usuario 'vagrant',
 
 ![Im.11.5](/assets/TERCER/Im.11.5.png)
 
-##**3.3. Ataque de Fuerza Bruta en SSH**
+## **3.3. Ataque de Fuerza Bruta en SSH**
 
 Luego de haber encontrado un usuario válido, se utiliza un ataque de fuerza bruta obtener posibles contraseñas.
 
@@ -224,16 +224,16 @@ Resultado:
 Se ejecuta y empieza a  realizar la búsqueda del USERNAME 'vagrant':
 ![Im.12.3](/assets/TERCER/Im.12.3.png)
 
-##**ETAPA 4: Explotación y Acceso**
+## **ETAPA 4: Explotación y Acceso**
 
-##**4.1. CONEXIÓN SSH**
+## **4.1. CONEXIÓN SSH**
 Ya obtenido el usuario y contraseña de la víctima (USERNAME: vagrant, CONTRASEÑA: vagrant), se procede a realizar la conexión SSH con la IP '10.0.2.15'. Sin embargo, para un mejor entorno de ejecución se ingresa al modo/terminal 'bash' de Metasploitable:
 
 ![Im.13.1](/assets/TERCER/Im.13.1.png)
 
-##**ETAPA 5: Extracción de Archivos SAM y SYSTEM** 
+## **ETAPA 5: Extracción de Archivos SAM y SYSTEM** 
 
-##**5.1. Comprobación de los Privilegios**
+## **5.1. Comprobación de los Privilegios**
 
 Desde el lado del adversario (Metasploitable) es necesario comprobar los privilegios que se tienen a través, del comando: 'whoami /priv'.
 
@@ -248,7 +248,7 @@ Desde el lado del adversario (Metasploitable) es necesario comprobar los privile
 Resultado:
 ![Im.13.2](/assets/TERCER/Im.13.2.png)
 
-###**5.2. Localiza el Script vssown.vbs**
+### **5.2. Localiza el Script vssown.vbs**
 
 Antes de continuar, se debe comprobar que el script vssown.vbs se encuentre disponible en el sistema comprometido. Este script se utiliza para crear una copia de sombra (Volume Shadow Copy), lo que permite acceder a archivos protegidos por el sistema.
 
@@ -284,7 +284,7 @@ Una vez transferido, ingresar a la ruta del archivo y listar el archivo vssown.v
 Resultado:
 ![14.4](/assets/tercer/14.4.png)
 
-##**5.3. ¿Qué podemos hacer con el vssown.vbs?**
+## **5.3. ¿Qué podemos hacer con el vssown.vbs?**
 Para listar los comandos que el archivo vssown.vbs permite ejecutar, solo debemos ejecutar 'cscript vssown.vbs' en la máquina víctima (Metasploitable). Asimismo, los comandos que vamos a usar son:
 
 /list                             - List current volume shadow copies.
@@ -303,7 +303,7 @@ Usos principales:
 - Creación de copias de seguridad.
 - Auditoría y análisis de información del sistema.
 
-##**5.4. EJECUCIÓN DEL SCRIPT VSSOWN.VBS**
+## **5.4. EJECUCIÓN DEL SCRIPT VSSOWN.VBS**
 Se inicia el servicio Volume Shadow Copy con el comando:
 
  1. cscript C:\\Users\\vagrant\\Downloads\\vssown.vbs /start
@@ -327,7 +327,7 @@ El script vssown.vbs generará una salida con la ubicación de la copia de sombr
 
  \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1 
 
-##**5.5. Copia los Archivos SAM y SYSTEM**
+## **5.5. Copia los Archivos SAM y SYSTEM**
 
 Ahora que tenemos la ruta de la copia del volumen shadow (vss), entrar en la terminal de Kali, para ello se debe de ingresar al ssh:
 
@@ -352,7 +352,7 @@ Resultado:
 ![Im.14.8](/assets/TERCER/Im.14.8.png)
 Salimos del modo cmd con 'exit'
 
-##**ETAPA 6: Transferir los Archivos SAM y SYSTEM al atacante**
+## **ETAPA 6: Transferir los Archivos SAM y SYSTEM al atacante**
 
 Previamente identificar la ruta real usando **scp** o descarga los archivos SAM y SYSTEM desde la máquina víctima a tu máquina atacante para realizar el análisis de los hashes de contraseñas. Para ello ingresar a la terminal de Kali, a la carpeta de descargas, con: 
  
@@ -364,7 +364,7 @@ password: vagrant
 Resultado:
 ![Im.14.9](/assets/TERCER/Im.14.9.png)
 
-##**ETAPA 7. Extracción de Hashes**
+## **ETAPA 7. Extracción de Hashes**
 
 ** samdump2: Asimismo, permite extraer los hashes de las contraseñas almacenadas en Windows utilizando los archivos SYSTEM y SAM. El archivo SYSTEM contiene la información necesaria para descifrar los datos protegidos del archivo SAM (Security Account Manager), donde se almacenan los hashes de las cuentas de usuario.
 
@@ -380,7 +380,7 @@ Resultado:
 ![Im.15.1](/assets/TERCER/Im.15.1.png)
 
 
-##**Reinicio de resultados de John the Ripper**
+## **Reinicio de resultados de John the Ripper**
 Se elimina el archivo ~/.john/john.pot, donde John the Ripper guarda las contraseñas encontradas. Esto permite que las credenciales recuperadas vuelvan a mostrarse durante una nueva ejecución del ataque.
 
     1 (user㉿kali)-[~/Downloads]
