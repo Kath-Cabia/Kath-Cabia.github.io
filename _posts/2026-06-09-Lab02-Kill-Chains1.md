@@ -130,7 +130,7 @@ Diccionarios descargados:
 
 ![Im.10](/assets/KILL/Im.10.png)
 
-En **Kali Linux** se envian los diccionarios descargados a la ruta: ***<Downloads/diccionarios>*** descomprimir con <**gzip -dk rockyou.txt.gz**> y y luego se corrobora que contenga al usuario <**vagrant**>:
+En **Kali Linux** se envian los diccionarios descargados a la ruta: ***Downloads/diccionarios*** descomprimir con <**gzip -dk rockyou.txt.gz**> y y luego se corrobora que contenga al usuario **vagrant**:
 
     (user㉿kali)-[~]
      $ cd Downloads/
@@ -160,7 +160,7 @@ Se crean 2 entornos de trabajo, la terminal superior será de **Linux** y la ter
 
 ![Im.11.1](/assets/KILL/Im.11.1.png)
 
-Se inicia Metasploitable con ***<msfconsole -q>***. La carga se visualiza como ***msf6***. Asimismo se tiene que cargar las herramientas de escaneo.
+Se inicia Metasploitable con ***msfconsole -q***. La carga se visualiza como ***msf6***. Asimismo se tiene que cargar las herramientas de escaneo.
 
      (user㉿kali)-[~/Downloads/diccionarios]
      $ msfconsole -q
@@ -173,7 +173,7 @@ Resultado:
 Ahora el **Atacante (Kali)** envía "scripts" paquetes SSH de autenticación con una lista de usuarios a la **víctima = "target (Metasploitable)** y este lo recibe. La víctima responde con un mensaje que permite que el Atacante pueda identificar si el usuario que se ha intentado es válido o no.
 
 Explicación:
-- El módulo utiliza una herramienta de Metasploitable para formar/consultar paquetes **<Malformed Packet>**. 
+- El módulo utiliza una herramienta de Metasploitable para formar/consultar paquetes **Malformed Packet**. 
 
 - Ingresando **"show options"** se visualizan todas las opciones de configuración, es decir, para saber que es lo que se tiene que configurar. El módulo **"ssh_enumusers"** tiene parámetros que sirven para configurar el funcionamiento de ese módulo.
 
@@ -206,9 +206,9 @@ En el script de Metasploitable: se ha encontrado el potencial usuario **'vagrant
 
 - Luego de haber encontrado un usuario válido, se utiliza un **ataque de fuerza bruta** obtener posibles contraseñas.
 
-- Para ello se ingresa el script **<ssh_login>** en Metasploitable para las autenticaciones sobre el usuario encontrado 'vagrant' con sus potenciales passwords que se encontrarán listados en el archivo.
+- Para ello se ingresa el script **ssh_login** en Metasploitable para las autenticaciones sobre el usuario encontrado 'vagrant' con sus potenciales passwords que se encontrarán listados en el archivo.
 
-- Recordar que tenemos que cambiar de módulo **(modulo actual: ssh_enunusers)** para realizar el **<login>**, con el comando **<use auxiliary/scanner/ssh/ssh_login>**.
+- Recordar que tenemos que cambiar de módulo **(modulo actual: ssh_enunusers)** para realizar el **login**, con el comando **use auxiliary/scanner/ssh/ssh_login**.
 
     1. msf6 auxiliary(scanner/ssh/ssh_anumusers)>use auxiliary/scanner/ssh/ssh_login
     2. msf6 auxiliary(scanner/ssh/ssh_login)>show options
@@ -234,7 +234,7 @@ Se ejecuta y empieza a  realizar la búsqueda del USERNAME **'vagrant'**:
 ## **ETAPA 4: Explotación y Acceso**
 
 ## **4.1. CONEXIÓN SSH**
-Ya obtenido el usuario y contraseña de la víctima **(<USERNAME: vagrant, CONTRASEÑA: vagrant>)**, se procede a realizar la conexión SSH con la **IP '10.0.2.15'**. Sin embargo, para un mejor entorno de ejecución se ingresa al modo/terminal 'bash' de Metasploitable:
+Ya obtenido el usuario y contraseña de la víctima **(USERNAME: vagrant, CONTRASEÑA: vagrant)**, se procede a realizar la conexión SSH con la **IP '10.0.2.15'**. Sin embargo, para un mejor entorno de ejecución se ingresa al modo/terminal 'bash' de Metasploitable:
 
 ![Im.13.1](/assets/KILL/Im.13.1.png)
 
@@ -242,7 +242,7 @@ Ya obtenido el usuario y contraseña de la víctima **(<USERNAME: vagrant, CONTR
 
 ## **5.1. Comprobación de los Privilegios**
 
-Desde el lado del adversario (Metasploitable) es necesario comprobar los privilegios que se tienen a través, del comando: **<whoami /priv>**.
+Desde el lado del adversario (Metasploitable) es necesario comprobar los privilegios que se tienen a través, del comando: **whoami /priv**.
 
 - Si tenemos privilegios de administrador, deberíamos ver permisos como **'SeBackupPrivilege'** y **'SeRestorePrivilege'**.
 
