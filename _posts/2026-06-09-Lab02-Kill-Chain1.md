@@ -1,8 +1,8 @@
 ---
-title: "Lab.02 - Kill Chains 1"
+title: "Lab.02 - Kill Chain 1"
 date: 2026-06-09
 categories: [lab, setup]
-tags: [kill Chains, SSH, metasploitable, kali]
+tags: [kill Chain, SSH, metasploitable, kali]
 ---
 
 # **KILL CHAIN 1: SSH Brute Force + Credential Dumping** 
