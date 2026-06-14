@@ -359,10 +359,10 @@ Líneas de comando:
 
 Y copiar los archivos SAM y SYSTEM del volumen shadow:
 
-**SAM:**
+**SAM**
      cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\windows\system32\config\SAM 
 
-**SYSTEM:**
+**SYSTEM**
      cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM
 
 **NOTA:** Reemplazar HarddiskVolumeShadowCopyX con el número correspondiente que el script vssown.vbs nos indicó. En este caso es **HarddiskVolumeShadowCopy1**
@@ -390,8 +390,8 @@ Resultado:
 - **samdump2:** Asimismo, permite extraer los hashes de las contraseñas almacenadas en Windows utilizando los archivos SYSTEM y SAM. El archivo SYSTEM contiene la información necesaria para descifrar los datos protegidos del archivo SAM (Security Account Manager), donde se almacenan los hashes de las cuentas de usuario.
 
 En Kali:
-    1. samdump2 SYSTEM SAM > hashes.txt
-    2. samdump2 SYSTEM SAM 
+     1. samdump2 SYSTEM SAM > hashes.txt
+     2. samdump2 SYSTEM SAM 
 
 **NOTA:** Para funcionar, samdump2 requiere dos archivos específicos del registro de Windows: el hive SYSTEM y el hive SAM. El archivo SYSTEM contiene la clave necesaria para descifrar la información almacenada en el archivo SAM (Security Account Manager), que es donde residen los hashes de las contraseñas de los usuarios.
 
