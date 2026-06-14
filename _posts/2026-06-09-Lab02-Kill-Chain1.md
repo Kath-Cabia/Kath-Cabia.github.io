@@ -40,9 +40,9 @@ Resultado:
 Se realizó un escaneo agresivo con **Nmap** para identificar el sistema operativo, los servicios activos, sus versiones y otra información relevante del host objetivo, examinando además todos los puertos TCP disponibles.
 
 Explicación previa:
-- *-A* : Activa el modo agresivo en Nmap.
-- *-p-* : Escanea todos los puertos en lugar de solo los más comunes.
-- *10.0.2.15*: IP de la víctima (VM Metasploitable).
+- **-A** : Activa el modo agresivo en Nmap.
+- **-p-** : Escanea todos los puertos en lugar de solo los más comunes.
+- **10.0.2.15**: IP de la víctima (VM Metasploitable).
 
     sudo nmap -A -p- 10.0.2.15
 
@@ -135,14 +135,14 @@ Diccionarios descargados:
 En **Kali Linux** se envian los diccionarios descargados a la ruta: ***Downloads/diccionarios*** descomprimir con <**gzip -dk rockyou.txt.gz**> y y luego se corrobora que contenga al usuario **vagrant**:
 
     (user㉿kali)-[~]
-     $ cd Downloads/
+    cd Downloads/
     (user㉿kali)-[~/Downloads]
-     $ cd diccionarios/
+    cd diccionarios/
     (user㉿kali)-[~/Downloads/diccionarios]
-     $ ls
-    rockyou.txt.gz  top-usernames-shortlist.txt
+    ls
+               rockyou.txt.gz  top-usernames-shortlist.txt
     (user㉿kali)-[~/Downloads/diccionarios]
-     $ gzip -dk rockyou.txt.gz
+    gzip -dk rockyou.txt.gz
  
 Resultado
 
