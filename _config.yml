@@ -99,7 +99,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/462700152_8628880920512993_2419863463601915567_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x1080&ctp=s1080x1080&_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHwOL3TIVJ5yQJtkbJ7dx6-LgYXGvieaZIuBhca-J5pkktrt-h95H11_Oa3nKsHFZjMc_QgR40RJkjyhfKqpLgJ&_nc_ohc=JRy3JgJli0MQ7kNvwFCHzF-&_nc_oc=AdpM8vyG6_9T9knBwRwyXNd0mwnMmbiNxgdi8F7mFhs4rCbSyTi54_IHyKSi_Co0dw4-oh2xeHBweSlrOO5hrtQ0&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=DbnloyerFev4SCkK4miNLw&_nc_ss=7b2a8&oh=00_Af-raYs8cS4A3W5zW3l3OJTV9Xfijy3mIV_QMl85uvJUOA&oe=6A2EB545
+avatar: https://goo.su/dg9NEu
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
 social_preview_image: # string, local or CORS resources
