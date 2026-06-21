@@ -81,14 +81,14 @@ Se utilizó: Groovy de Jenkins
 
 ## 4.2. Detener servicios críticos de Windows:
 
-**Detener el servidor de archivos SMB**
+**Detener el servidor de archivos SMB**.
 Código en Groovy:
 
      "cmd /c net stop lanmanserver".execute()
 
 ![KILL2.2.6](/assets/KILL2/KILL2.2.6.png)
 
-**Detener el servicio de acceso remoto WinRM**
+**Detener el servicio de acceso remoto WinRM**.
 Código en Groovy:
    
      "cmd /c net stop winrm".execute()
@@ -103,28 +103,29 @@ Código en Groovy:
         Thread.start { while (true) {} }
     }
 
-***NOTA:*** Este código crea una gran cantidad de tareas al mismo tiempo y hace que cada una trabaje sin detenerse nunca. Como resultado, el procesador (CPU) se satura cada vez más hasta que la computadora o el servicio se vuelven extremadamente lentos o dejan de responder. En términos simples, intenta consumir todos los recursos disponibles de la máquina para afectar su funcionamiento normal.
+**NOTA:** Este código crea una gran cantidad de tareas al mismo tiempo y hace que cada una trabaje sin detenerse nunca. Como resultado, el procesador (CPU) se satura cada vez más hasta que la computadora o el servicio se vuelven extremadamente lentos o dejan de responder. En términos simples, intenta consumir todos los recursos disponibles de la máquina para afectar su funcionamiento normal.
 
-**Jenkins antes del agotamiento:**
+**JENKINS ANTES DEL AGOTAMIENTO:**
 
 ![KILL2.2.8](/assets/KILL2/KILL2.2.8.png)
 
-**Carga de la página Jenkins después del agotamiento:** Vista de nueva pestaña con el URL de la página y vista del Script Console de Jenkins:
+**Carga de la página JENKINS DESPUÉS DEL AGOTAMIENTO:** Vista de nueva pestaña con el URL **hhtp://10.0.2.15:8484/** de la página y vista del **Script Console** de Jenkins:
 
 ![KILL2.2.9](/assets/KILL2/KILL2.2.9.png)
 
 **Vista del agotamiento en Kali vs Metasploitable**.
 
 **En Metasploitable:**
+
 **Opción A:** ingresar el comando para ver el consumo porcentual del CPU en la máquina víctima.
 
          Get-Counter '\Processor(_Total)\% Processor Time'
 
-**Opción B:** abrir ***Windows Task Manager (Administrador de tarea)*** para visualizar el consumo del procesador, CPU y memoria en tiempo real.
+**Opción B:** abrir **Windows Task Manager (Administrador de tarea)** para visualizar el consumo del procesador, CPU y memoria en tiempo real.
 
 ![KILL2.2.10](/assets/KILL2/KILL2.2.10.png)
 
-Se reinicia la máquina virtual para recuperar el acceso a Metasploitable.
+Se REINICIA la máquina virtual para recuperar el acceso a Metasploitable.
 
 ![KILL2.2.11](/assets/KILL2/KILL2.2.11.png)
 
