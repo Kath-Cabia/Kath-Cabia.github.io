@@ -4,12 +4,11 @@ date: 2026-06-20
 categories: [lab, setup]
 tags: [kill Chain2, jenkins, metasploitable, kali]
 ---
- **KILL CHAIN 2: Jenkins Script Console RCE** 
+## **KILL CHAIN 2: Jenkins Script Console RCE** 
 
 ## **1. ¿Qué es Groovy y por qué da acceso total?
-**
 
-Groovy es el lenguaje que usa Jenkins para ejecutar instrucciones dentro del servidor. Si una persona tiene acceso a la consola Groovy, puede darle órdenes directamente a la máquina donde está instalado Jenkins, como si estuviera sentado frente a ella. Por ejemplo, puede ver información del sistema, leer archivos, ejecutar programas o intentar detener servicios. Por eso se dice que Groovy puede dar mucho control sobre el servidor: no porque sea peligroso por sí mismo, sino porque permite que Jenkins haga prácticamente todo lo que tiene permitido hacer en esa computadora.
+**Groovy** es el lenguaje que usa Jenkins para ejecutar instrucciones dentro del servidor. Si una persona tiene acceso a la consola Groovy, puede darle órdenes directamente a la máquina donde está instalado **Jenkins**,** como si estuviera sentado frente a ella. Por ejemplo, puede ver información del sistema, leer archivos, ejecutar programas o intentar detener servicios. Por eso se dice que Groovy puede dar mucho control sobre el servidor: no porque sea peligroso por sí mismo, sino porque permite que Jenkins haga prácticamente todo lo que tiene permitido hacer en esa computadora.
 
 ## **2. Prerequisito: acceso a la red interna**
 En un entorno real, este tipo de servidor suele estar protegido y disponible únicamente para usuarios o equipos que ya se encuentran dentro de la infraestructura de la organización. Por ello, antes de iniciar este Kill Chain se asume que el atacante ya ha conseguido algún nivel de acceso previo, ya sea mediante el compromiso de otro equipo, el uso indebido de credenciales válidas o la colaboración de una persona con acceso autorizado. 
@@ -30,7 +29,7 @@ Para la presente práctica, esta situación se simuló colocando Kali y Metasplo
 ![KILL2.1.3](/assets/KILL2/KILL2.1.3.png)
 
 
-En **Metasploitable3, Jenkins** está configurado para funcionar directamente desde la ruta principal del servidor. Por ello, la consola de scripts se encuentra en **/script**. Si se intenta acceder usando una ruta como **/jenkins**, el servidor devuelve un **error 404 (página no encontrada)** porque esa ubicación no existe en esta configuración.
+En **Metasploitable3, Jenkins** está configurado para funcionar directamente desde la ruta principal del servidor. Por ello, la consola de scripts se encuentra en **/script**. Si se intenta acceder usando una ruta como **/jenkins**, el servidor devuelve un **Error 404 (página no encontrada)** porque esa ubicación no existe en esta configuración.
 
 Abrir el browser en Kali y navegar a:
 
@@ -38,9 +37,12 @@ Abrir el browser en Kali y navegar a:
      http://10.0.2.15:8484/script     #Abre Jenkins
 
 ![KILL2.2.1](/assets/KILL2/KILL2.2.1.png)
+
+En la consola Script de Jenkins:
+
 ![KILL2.2.2](/assets/KILL2/KILL2.2.2.png)
 
-En **GROOVY de Kali**: ingresar
+En **GROOVY de Kali**: 
 Lo que has demostrado es que desde la Script Console se pueden ejecutar comandos del sistema **(whoami, ipconfig)**.
 
      println "cmd /c whoami".execute().text
@@ -55,7 +57,6 @@ Lo que has demostrado es que desde la Script Console se pueden ejecutar comandos
 **NOTA 1:** El que salga como resultado: **nt authority\local service** significa que ***Jenkins*** está corriendo como la cuenta integrada de Windows llamada Local Service.
 
 **NOTA 2:** La explotación permitió la ejecución remota de comandos a través de Jenkins. El comando **whoami** reveló que los procesos se ejecutaban bajo la cuenta **NT AUTHORITY\LOCAL SERVICE**, indicando que la aplicación operaba con **privilegios restringidos** y no con privilegios administrativos."
-
 
 ## **4. IMPACTO: DENEGACIÓN DE SERVICIO (DoS)**
 ## 4.1. Detener el propio servicio Jenkins:
@@ -72,14 +73,14 @@ Se utilizó: Groovy de Jenkins
 
 ## 4.2. Detener servicios críticos de Windows:
 
-Detener el servidor de archivos SMB
+**Detener el servidor de archivos SMB**
 Código en Groovy:
 
      "cmd /c net stop lanmanserver".execute()
 
 ![KILL2.2.6](/assets/KILL2/KILL2.2.6.png)
 
-Detener el servicio de acceso remoto WinRM
+**Detener el servicio de acceso remoto WinRM**
 Código en Groovy:
    
      "cmd /c net stop winrm".execute()
@@ -90,9 +91,9 @@ Código en Groovy:
 
 Código en Groovy:
 
-     while (true) {
-         Thread.start { while (true) {} }
-     }
+    while (true) {
+        Thread.start { while (true) {} }
+    }
 
 ***NOTA:*** Este código crea una gran cantidad de tareas al mismo tiempo y hace que cada una trabaje sin detenerse nunca. Como resultado, el procesador (CPU) se satura cada vez más hasta que la computadora o el servicio se vuelven extremadamente lentos o dejan de responder. En términos simples, intenta consumir todos los recursos disponibles de la máquina para afectar su funcionamiento normal.
 
@@ -100,7 +101,7 @@ Código en Groovy:
 
 ![KILL2.2.8](/assets/KILL2/KILL2.2.8.png)
 
-**Carga de la página Jenkins** después del agotamiento: Vista de nueva pestaña con el URL de la página y vista del Script Console de Jenkins:
+**Carga de la página Jenkins después del agotamiento:** Vista de nueva pestaña con el URL de la página y vista del Script Console de Jenkins:
 
 ![KILL2.2.9](/assets/KILL2/KILL2.2.9.png)
 
@@ -139,7 +140,7 @@ Código en Groovy:
 
 ![KILL2.2.13](/assets/KILL2/KILL2.2.13.png)
 
-Creación del archivo basura denominado "bomb.txt". Ahora se visualizan 160 ítems.
+Creación del archivo basura denominado **"bomb.txt"**. Ahora se visualizan 160 ítems.
 
 ![KILL2.2.14](/assets/KILL2/KILL2.2.14.png)
 
