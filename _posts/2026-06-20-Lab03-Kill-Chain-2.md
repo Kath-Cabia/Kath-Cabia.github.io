@@ -4,7 +4,8 @@ date: 2026-06-20
 categories: [lab, setup]
 tags: [kill Chain2, jenkins, metasploitable, kali]
 ---
-## **KILL CHAIN 2: Jenkins Script Console RCE** 
+
+# **KILL CHAIN 2: Jenkins Script Console RCE**
 
 ## **1. ¿Qué es Groovy y por qué da acceso total?
 
@@ -24,17 +25,20 @@ Para la presente práctica, esta situación se simuló colocando Kali y Metasplo
      netstat -ano | findstr :8484
      curl -s -o /dev/null -w "%{http_code}" http://10.0.2.15:8484/
 
+En Metasploitable:
+
 ![KILL2.1.2](/assets/KILL2/KILL2.1.2.png)
+
+En Kali:
 
 ![KILL2.1.3](/assets/KILL2/KILL2.1.3.png)
 
+En **Metasploitable 3, Jenkins** está configurado para funcionar directamente desde la ruta principal del servidor. Por ello, la consola de scripts se encuentra en **/script**. Si se intenta acceder usando una ruta como **/jenkins**, el servidor devuelve un **Error 404 (página no encontrada)** porque esa ubicación no existe en esta configuración.
 
-En **Metasploitable3, Jenkins** está configurado para funcionar directamente desde la ruta principal del servidor. Por ello, la consola de scripts se encuentra en **/script**. Si se intenta acceder usando una ruta como **/jenkins**, el servidor devuelve un **Error 404 (página no encontrada)** porque esa ubicación no existe en esta configuración.
-
-Abrir el browser en Kali y navegar a:
+Abrir el browser ***(Firefox)*** en Kali y navegar a:
 
      http://10.0.2.15:8484/jenkins    # Error
-     http://10.0.2.15:8484/script     #Abre Jenkins
+     http://10.0.2.15:8484/script     # Abre Jenkins
 
 ![KILL2.2.1](/assets/KILL2/KILL2.2.1.png)
 
@@ -58,7 +62,7 @@ Lo que has demostrado es que desde la Script Console se pueden ejecutar comandos
 
 **NOTA 2:** La explotación permitió la ejecución remota de comandos a través de Jenkins. El comando **whoami** reveló que los procesos se ejecutaban bajo la cuenta **NT AUTHORITY\LOCAL SERVICE**, indicando que la aplicación operaba con **privilegios restringidos** y no con privilegios administrativos."
 
-## **4. IMPACTO: DENEGACIÓN DE SERVICIO (DoS)**
+## **4. Impacto: Denegación de Servicio (DoS)**
 ## 4.1. Detener el propio servicio Jenkins:
 
 Se utilizó: Groovy de Jenkins
