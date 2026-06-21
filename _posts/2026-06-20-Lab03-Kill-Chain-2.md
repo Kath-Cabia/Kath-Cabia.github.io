@@ -7,29 +7,33 @@ tags: [kill Chain2, jenkins, metasploitable, kali]
 
 # **KILL CHAIN 2: Jenkins Script Console RCE**
 
-## **1. ¿Qué es Groovy y por qué da acceso total?
+## **1. ¿Qué es Groovy y por qué da acceso total?**
 
 **Groovy** es el lenguaje que usa Jenkins para ejecutar instrucciones dentro del servidor. Si una persona tiene acceso a la consola Groovy, puede darle órdenes directamente a la máquina donde está instalado **Jenkins**,** como si estuviera sentado frente a ella. Por ejemplo, puede ver información del sistema, leer archivos, ejecutar programas o intentar detener servicios. Por eso se dice que Groovy puede dar mucho control sobre el servidor: no porque sea peligroso por sí mismo, sino porque permite que Jenkins haga prácticamente todo lo que tiene permitido hacer en esa computadora.
 
 ## **2. Prerequisito: acceso a la red interna**
-En un entorno real, este tipo de servidor suele estar protegido y disponible únicamente para usuarios o equipos que ya se encuentran dentro de la infraestructura de la organización. Por ello, antes de iniciar este Kill Chain se asume que el atacante ya ha conseguido algún nivel de acceso previo, ya sea mediante el compromiso de otro equipo, el uso indebido de credenciales válidas o la colaboración de una persona con acceso autorizado. 
+En un entorno real, este tipo de servidor suele estar protegido y disponible únicamente para usuarios o equipos que ya se encuentran dentro de la infraestructura de la organización. Por ello, antes de iniciar este Kill Chain **se asume que el atacante** ya **ha conseguido algún nivel de acceso previo**, ya sea mediante el compromiso de otro equipo, el uso indebido de credenciales válidas o la colaboración de una persona con acceso autorizado. 
 
-En nuestro caso, esta condición se relaciona con el Kill Chain 1, donde se obtuvo acceso mediante un ataque de fuerza bruta, permitiendo identificar credenciales válidas, reconocer los privilegios asociados a la cuenta comprometida y recopilar información del sistema. A partir de ese punto, se asumió una presencia inicial dentro del entorno objetivo. 
+**En nuestro caso**, esta condición se relaciona con el **Kill Chain 1**, donde se obtuvo acceso mediante un ataque de fuerza bruta, permitiendo identificar credenciales válidas, reconocer los privilegios asociados a la cuenta comprometida y recopilar información del sistema. A partir de ese punto, se asumió una presencia inicial dentro del entorno objetivo. 
 
-Para la presente práctica, esta situación se simuló colocando Kali y Metasploitable3 en la misma red virtual, lo que permitió interactuar directamente con Jenkins y continuar con las fases de reconocimiento, enumeración y explotación.
+Para la presente práctica, esta situación se simuló colocando Kali y Metasploitable 3 en la misma red virtual, lo que permitió interactuar directamente con Jenkins y continuar con las fases de explotación.
 
 ## **3. Ejecución en Groovy**
 ## 3.1. Verificar que Jenkins está activo antes de intentar conectar
 
-     Get-Service | Where-Object {$_.DisplayName -like "*jenkins*"}
-     netstat -ano | findstr :8484
-     curl -s -o /dev/null -w "%{http_code}" http://10.0.2.15:8484/
+**Desde Metasploitable:**
+Se pueden realizar dos tipos de verificación del estado del servicio Windows. 
+Resultado esperado: Running   Jenkins
 
-En Metasploitable:
+     1. Get-Service | Where-Object {$_.DisplayName -like "*jenkins*"}
+     2. netstat -ano | findstr :8484
 
 ![KILL2.1.2](/assets/KILL2/KILL2.1.2.png)
 
-En Kali:
+**Desde Kali:** (alternativa sin entrar a la VM víctima)
+Debe responder **200** si Jenkins está levantado.
+
+     1. curl -s -o /dev/null -w "%{http_code}" http://10.0.2.15:8484/
 
 ![KILL2.1.3](/assets/KILL2/KILL2.1.3.png)
 
