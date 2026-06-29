@@ -951,3 +951,5 @@ OUTPUT esperado:
 
 Los hashes NT resultantes son los mismos que extrajimos en el Kill Chain 1 vía VSS + samdump2 — pero aquí los obtenemos directamente desde Meterpreter en segundos, sin necesidad de copiar archivos SAM/SYSTEM manualmente. hashdump usa la misma técnica internamente: lee el hive SAM a través de una copia en memoria del kernel.
 
+FIN
+
