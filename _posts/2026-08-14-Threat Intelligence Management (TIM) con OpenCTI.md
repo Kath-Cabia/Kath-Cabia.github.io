@@ -16,9 +16,15 @@ Con la VM apagada → Configuración → Sistema:
 - Placa base → Memoria base: 8192 MB
 - Procesador: 4 CPUs
 
+![T16.1](/assets/TIM/T16.1.png)
+
 ## 1.2 — Segundo disco de 25 GB para Docker
 En la GUI: Configuración → Almacenamiento → Controlador SATA → 
 Agregar disco duro → Crear → VDI → Reservado dinámicamente → 25 GB.
+
+![T16.2](/assets/TIM/T16.2.png)
+![T16.3](/assets/TIM/T16.3.png)
+![T16.4](/assets/TIM/T16.4.png)
 
 NOTA: 
 - Verificación crítica dentro de Kali antes de formatear. 
