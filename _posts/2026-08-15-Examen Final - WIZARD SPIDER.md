@@ -132,13 +132,13 @@ La acción corresponde al adversario, mientras que el servicio remoto explotado 
  
 ![4.8](/assets/ACT1/4.8.png)
 
-***
-# **ACTO 2: Plan de ataque mapeado a ATT&CK
+# **ACTO 2: Plan de ataque mapeado a ATT&CK**
 Estas tablas permiten relacionar las TTPs identificadas en el Acto 1 con las acciones que realmente pueden realizarse dentro del laboratorio utilizando Metasploitable3. De esta manera, se determina cuáles de las técnicas tienen un equivalente práctico en el entorno y qué herramienta o procedimiento puede utilizarse para reproducirlas.
 La **Tabla 1** muestra el análisis de cada TTP y permite identificar cuáles pueden llevarse a cabo en el laboratorio y cuáles se descartan debido a las características del entorno. 
 La **Tabla 2** resume las técnicas seleccionadas, indicando la táctica, el objetivo o servicio involucrado y la herramienta que se utilizará para realizar la prueba.
 
 # **Tabla 1. Análisis de las TTPs del APT y su aplicación en Metasploitable3**
+
 |        |                                   |                  |                                                                                                     |
 | ID     | Técnica                           | ¿Tiene análogo   |                            ¿Por qué?                                                                |
 |        |                                   |   en el lab?     |                                                                                                     |
@@ -168,38 +168,35 @@ La **Tabla 2** resume las técnicas seleccionadas, indicando la táctica, el obj
 | T1685  | Disable or Modify Tools           |         Sí       | Con permisos de SYSTEM puedo apagar el firewall o el antivirus de la víctima con un comando, igual  | 
 |        |                                   |                  | que haría un atacante para no ser detectado.                                                        |
 |        |                                   |                  |                                                                                                     | 
-| T1210  | Exploitation of Remote Services   |  Sí (dentro del  | Es la vulnerabilidad de **SMB (puerto 445)** que exploto con **EternalBlue** para entrar a la máquina.      |
-|        |                                   |  ATP asignado)   |                                                                                                     |  
+| T1210  | Exploitation of Remote Services   |  Sí (dentro del  | Es la vulnerabilidad de **SMB (puerto 445)** que exploto con **EternalBlue** para                   |
+|        |                                   |  ATP asignado)   | entrar a la máquina.                                                                                |  
 
+**Tabla 2. Técnicas ATT&CK seleccionadas y herramientas para su ejecución en Metasploitable3**
 
-# **Tabla 2. Técnicas ATT&CK seleccionadas y herramientas para su ejecución en Metasploitable3**
-|             |                                   |                           |                                                             |
-| Tática      | Técnica ATT&CK                    | Servicio/objetivo en      |            Herramienta                                      |
-|             |                                   |   Metasploitable3         |                                                             |
-| :----------:| :-------------------------------: | :-----------------------: | :----------------------------------------------------------:| 
-| Lateral     | T1210 –                           | SMB / 445 (MS17-010)      | Metasploit (ms17_010_eternalblue)                           |                                                             |
-|             |                                   |                           |                                                             |          
-| Collection  | T1005 –                           | Sistema de archivos de la | Meterpreter (search, cat)                                   | 
-|             | Data from Local System            | víctima (post-sesión)     |                                                             |
-|             |                                   |                           |                                                             | 
-| Exfiltration| T1041 –                           | Canal Meterpreter ya      | Meterpreter (download)                                      |
-|             | Exfiltration Over C2 Channel      | establecido               |                                                             |                                                                      |
-|             |                                   |                           |                                                             | 
-| Persistence | T1053 –                           | Programador de tareas de  |  Shell de Meterpreter + schtasks (nativo)                   |
-|             | Scheduled Task/Job                | Windows en la víctima     |                                                             |
-|             |                                   |                           |                                                             | 
-| Command and | T1071 –                           | Canal C2 del propio       | Metasploit (payload windows/x64/meterpreter/reverse_https)  |
-| Control     | Application Layer Protocol        | payload                   |                                                             |
-|             |                                   |                           |                                                           - | 
-| Defense     | T1685 –                           | Firewall/Defender de      | Shell de Meterpreter + netsh/sc stop                        |
-| Impairment  | Disable or Modify Tools           | la víctima                |                                                             |
-|             |                                   |                           |                                                             | 
+| Tática      | Técnica ATT&CK                  | Servicio/objetivo en      |            Herramienta                                      |
+|             |                                 |   Metasploitable3         |                                                             |
+| :----------:| :------------------------------:| :------------------------ | ---------------------------------------------------------- :| 
+| Lateral     | T1210 –                         | SMB / 445 (MS17-010)      | Metasploit (ms17_010_eternalblue)                           |                                                             |
+|             |                                 |                           |                                                             |          
+| Collection  | T1005 –                         | Sistema de archivos de la | Meterpreter (search, cat)                                   | 
+|             | Data from Local System          | víctima (post-sesión)     |                                                             |
+|             |                                 |                           |                                                             | 
+| Exfiltration| T1041 –                         | Canal Meterpreter ya      | Meterpreter (download)                                      |
+|             | Exfiltration Over C2 Channel    | establecido               |                                                             |                                                                      |
+|             |                                 |                           |                                                             | 
+| Persistence | T1053 –                         | Programador de tareas de  |  Shell de Meterpreter + schtasks (nativo)                   |
+|             | Scheduled Task/Job              | Windows en la víctima     |                                                             |
+|             |                                 |                           |                                                             | 
+| Command and | T1071 –                         | Canal C2 del propio       | Metasploit (payload windows/x64/meterpreter/reverse_https)  |
+| Control     | Application Layer Protocol      | payload                   |                                                             |
+|             |                                 |                           |                                                             | 
+| Defense     | T1685 –                         | Firewall/Defender de      | Shell de Meterpreter + netsh/sc stop                        |
+| Impairment  | Disable or Modify Tools         | la víctima                |                                                             |
+|             |                                 |                           |                                                             | 
 
-
-***
+Se inicia con el siguiente acto
 ## **ACTO 3 -  EJECUCIÓN**
-
-## Paso 0 — Snapshot de seguridad
+## **Paso 0 — Snapshot de seguridad**
 
 Antes de nada, en VirtualBox/VMware: clic derecho sobre la VM de Metasploitable3 → Tomar instantánea **(snapshot)**.
 
@@ -211,7 +208,7 @@ El snapshot es tu "deshacer".
 
 ![1](/assets/ACT3/1.png)
 
-## Paso 1 — Averiguar tu propia IP (Kali)
+## **Paso 1 — Averiguar tu propia IP (Kali)**
 Anota tu LHOST (IP de Kali). Luego confirma la IP de Metasploitable3 (la tendrás de configuración previa del lab, o con arp-scan -l / netdiscover en la misma red).
 
     Ip Kali
@@ -223,7 +220,7 @@ Anota tu LHOST (IP de Kali). Luego confirma la IP de Metasploitable3 (la tendrá
 ![2](/assets/ACT3/2.png)
 ![2.1](/assets/ACT3/2.1.png)
 
-## Paso 2. Reconocimiento del objetivo — T1046 (Network Service Discovery)
+## **Paso 2. Reconocimiento del objetivo — T1046 (Network Service Discovery)**
 Lo primero fue confirmar que el puerto 445 (SMB) estaba abierto y ver qué versión de Windows corría detrás:
 
     nmap -sV -p445 [tu IP de Metasploitable3]
@@ -289,10 +286,12 @@ Esta imagen significa que el **search** funcionó correctamente - Meterpreter re
 Es una lista larga, y lo que se ve en pantalla es solo el principio.
 
 **OTRO ARCHIVOS QUE SE OBSERVAN**
+
 Los archivos (InjecterInfo.txt, ABOUT_APACHE.txt, CHANGES.txt, LICENSE.txt, etc) están dentro de la carpeta C:ManageEngine DesktopCentral_Server - son archivos normales de instalación de un software llamado **ManageEngine Desktop Central**, que viene instalado en **Metasploitable3** a propósito (es otro servicio vulnerable de esta máquina, aparte de **SMB**). No son nada **"interesantes"** en sí, son licenncias, notas de versión, documentación de apache, típicos archivos que trae cualquier instalación de software.
 
 
 ***
 ## **ACTO 4 - DEFENSA**
+
 
 ***
