@@ -292,7 +292,7 @@ Es una lista larga, y lo que se ve en pantalla es solo el principio.
 Los archivos (InjecterInfo.txt, ABOUT_APACHE.txt, CHANGES.txt, LICENSE.txt, etc) están dentro de la carpeta 
 C:ManageEngine DesktopCentral_Server - son archivos normales de instalación de un software llamado **ManageEngine Desktop Central**, que viene instalado en **Metasploitable3** a propósito (es otro servicio vulnerable de esta máquina, aparte de **SMB**). No son nada **"interesantes"** en sí, son licenncias, notas de versión, documentación de apache, típicos archivos que trae cualquier instalación de software.
 
-![8](/assets/ACT3/8.png)
+
 
 ***
 
