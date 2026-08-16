@@ -139,61 +139,61 @@ La **Tabla 1** muestra el análisis de cada TTP y permite identificar cuáles pu
 La **Tabla 2** resume las técnicas seleccionadas, indicando la táctica, el objetivo o servicio involucrado y la herramienta que se utilizará para realizar la prueba.
 
 # **Tabla 1. Análisis de las TTPs del APT y su aplicación en Metasploitable3**
-| :----- | --------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------|
+|        |                                   |                  |                                                                                                     |
 | ID     | Técnica                           | ¿Tiene análogo   |                            ¿Por qué?                                                                |
 |        |                                   |   en el lab?     |                                                                                                     |
 | :----- | :-------------------------------: | :--------------: | -------------------------------------------------------------------------------------------------- :| 
 | T1071  | Application Layer Protocol (C2)   |         Sí       | Cuando abro la sesión con Meterpreter, esa conexión ya es un canal de C2.                           |
 |        |                                   |                  | Si en vez del payload normal uso uno por HTTPS, se ve más claro que el atacante                     |
 |        |                                   |                  | controla la máquina usando un protocolo "normal" de internet para camuflarse.                       |
-| :----- | --------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- |          
+|        |                                   |                  |                                                                                                     |          
 | T1585  | Establish Accounts                |         No       | Esto es crear cuentas falsas (redes sociales, correos) antes del ataque, para preparar el terreno.  | 
 |        |                                   |                  | Es algo que pasa afuera, en internet, no dentro de mi red de laboratorio.                           |
 |        |                                   |                  | Como mi lab está aislado y sin internet, no hay forma de reproducirlo.                              |
-| :----- | --------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- | 
+|        |                                   |                  |                                                                                                     | 
 | T1053  | Scheduled Task/Job                |         Sí       | Una vez que tengo control total (SYSTEM) de la máquina, puedo crear una tarea programada para que,  |
 |        |                                   |                  | aunque me desconecte, el sistema me "abra la puerta" otra vez más tarde. Eso sí lo puedo hacer con  |
 |        |                                   |                  | un simple comando de Windows.                                                                       |
-| :----- | --------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- | 
+|        |                                   |                  |                                                                                                     | 
 | T1133  | External Remote Services          |         No       | Esta técnica es para cuando el atacante entra por un servicio que da al internet, como una VPN.     |
 |        |                                   |                  | En mi lab no hay "afuera" ni "adentro" — mi Kali y Metasploitable3 están en la misma red chica, así |
 |        |                                   |                  | que no existe ese salto externo→interno que pide la técnica.                                        |
-| :----- | --------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- | 
+|        |                                   |                  |                                                                                                     | 
 | T1005  | Data from Local System            |         Sí       | Es simplemente buscar y leer archivos dentro de la máquina que ya controlo. Con search y cat en     |
 |        |                                   |                  | **Meterpreter** lo hago directo.                                                                    |
-| :----- | --------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- | 
+|        |                                   |                  |                                                                                                     | 
 | T1041  | Exfiltration Over C2 Channel      |         Sí       | Es sacar ese archivo de la víctima hacia mi Kali, usando la misma conexión que ya abrí con el       |
 |        |                                   |                  | **exploit**. Con el comando download de Meterpreter queda demostrado.                               |
-| :----- | --------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- | 
+|        |                                   |                  |                                                                                                     | 
 | T1685  | Disable or Modify Tools           |         Sí       | Con permisos de SYSTEM puedo apagar el firewall o el antivirus de la víctima con un comando, igual  | 
 |        |                                   |                  | que haría un atacante para no ser detectado.                                                        |
-| :----- | --------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- | 
+|        |                                   |                  |                                                                                                     | 
 | T1210  | Exploitation of Remote Services   |  Sí (dentro del  | Es la vulnerabilidad de **SMB (puerto 445)** que exploto con **EternalBlue** para entrar a la máquina.      |
 |        |                                   |  ATP asignado)   |                                                                                                     |  
-| :----- | --------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------- | 
+
 
 # **Tabla 2. Técnicas ATT&CK seleccionadas y herramientas para su ejecución en Metasploitable3**
-| :-----------| :-------------------------------: | :-----------------------: | :---------------------------------------------------------: |
+|             |                                   |                           |                                                             |
 | Tática      | Técnica ATT&CK                    | Servicio/objetivo en      |            Herramienta                                      |
 |             |                                   |   Metasploitable3         |                                                             |
-| :----------:| :-------------------------------: | :-----------------------: | -----------------------------------------------------------:| 
+| :----------:| :-------------------------------: | :-----------------------: | :----------------------------------------------------------:| 
 | Lateral     | T1210 –                           | SMB / 445 (MS17-010)      | Metasploit (ms17_010_eternalblue)                           |                                                             |
-| :---------: | --------------------------------- | :-----------------------: | ----------------------------------------------------------- |          
+|             |                                   |                           |                                                             |          
 | Collection  | T1005 –                           | Sistema de archivos de la | Meterpreter (search, cat)                                   | 
 |             | Data from Local System            | víctima (post-sesión)     |                                                             |
-| :---------- | --------------------------------- | ------------------------- | ----------------------------------------------------------- | 
+|             |                                   |                           |                                                             | 
 | Exfiltration| T1041 –                           | Canal Meterpreter ya      | Meterpreter (download)                                      |
 |             | Exfiltration Over C2 Channel      | establecido               |                                                             |                                                                      |
-| :---------- | --------------------------------- | ------------------------: | ----------------------------------------------------------- | 
+|             |                                   |                           |                                                             | 
 | Persistence | T1053 –                           | Programador de tareas de  |  Shell de Meterpreter + schtasks (nativo)                   |
 |             | Scheduled Task/Job                | Windows en la víctima     |                                                             |
-| :---------- | --------------------------------- | ------------------------- | ----------------------------------------------------------- | 
+|             |                                   |                           |                                                             | 
 | Command and | T1071 –                           | Canal C2 del propio       | Metasploit (payload windows/x64/meterpreter/reverse_https)  |
 | Control     | Application Layer Protocol        | payload                   |                                                             |
-| :---------- | --------------------------------- | ------------------------: | --------------------------------------------------------------------------------------------------- | 
+|             |                                   |                           |                                                           - | 
 | Defense     | T1685 –                           | Firewall/Defender de      | Shell de Meterpreter + netsh/sc stop                        |
 | Impairment  | Disable or Modify Tools           | la víctima                |                                                             |
-| :---------- | --------------------------------- | ------------------------: | ----------------------------------------------------------- | 
+|             |                                   |                           |                                                             | 
 
 
 ***
