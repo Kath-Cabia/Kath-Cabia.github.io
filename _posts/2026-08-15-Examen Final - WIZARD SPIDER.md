@@ -4,6 +4,7 @@ date: 2026-08-15
 categories: [Examen, Threat Intelligence]
 tags: [examen-final]
 ---
+
 # **ACTO 1 — LA INTELIGENCIA DIRIGE (OpenCTI del curso)**
 
 Ingresar al ***OpenCTI*** del servidor del curso con las credenciales temporales y elige un grupo APT para analizar.
@@ -294,6 +295,7 @@ C:ManageEngine DesktopCentral_Server - son archivos normales de instalación de 
 ![8](/assets/ACT3/8.png)
 
 ***
+
 ## **ACTO 4 - DEFENSA**
 No se culminó a tiempo.
 
